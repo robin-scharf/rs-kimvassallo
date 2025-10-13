@@ -1,15 +1,47 @@
-# 🚀 Getting started with Strapi
+# Kim Vassallo Website - Strapi CMS
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+A professional therapy website CMS for **Kim Vassallo, LCSW-R**, built with Strapi v5.27.0. This project provides a complete headless CMS backend based on the design inspiration from jmurbanlcsw.com.
+
+## 🎯 Project Overview
+
+This Strapi application manages all content for the Kim Vassallo therapy website:
+- **Home**: Hero section with credentials and tagline
+- **About**: Professional background
+- **Approach**: Therapeutic philosophy
+- **Services**: Therapy services offered
+- **Contact**: Contact information
+
+All content is managed through the Strapi admin panel and accessible via REST API.
+
+## 🚀 Quick Start
+
+### 1. Install Dependencies
+```bash
+pnpm install
+```
+
+### 2. Start Development Server
+```bash
+pnpm develop
+```
+This opens `http://localhost:1337/admin` where you'll create your admin account.
+
+### 3. Seed Database
+```bash
+pnpm seed
+```
+This populates the CMS with Kim Vassallo content.
+
+**📖 See `QUICK-START.md` for detailed setup instructions.**
+
+## 📋 Available Commands
 
 ### `develop`
 
 Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
 
 ```
-npm run develop
-# or
-yarn develop
+pnpm develop
 ```
 
 ### `start`
@@ -17,9 +49,7 @@ yarn develop
 Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
 
 ```
-npm run start
-# or
-yarn start
+pnpm start
 ```
 
 ### `build`
@@ -27,17 +57,46 @@ yarn start
 Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
 
 ```
-npm run build
-# or
-yarn build
+pnpm build
 ```
+
+### `seed`
+
+Seed the database with Kim Vassallo website content.
+
+```
+pnpm seed
+```
+
+## 🌐 API Endpoints
+
+Once seeded, access your content at:
+
+- **Home**: `GET /api/home`
+- **About**: `GET /api/about?populate=blocks`
+- **Approach**: `GET /api/approach`
+- **Services**: `GET /api/services?sort=order:asc`
+- **Contact**: `GET /api/contact`
+- **Global**: `GET /api/global?populate=defaultSeo`
+
+## 📁 Content Types
+
+### Single Types (One Instance)
+- `home` - Hero section
+- `about` - About page with dynamic blocks
+- `approach` - Therapeutic approach
+- `contact` - Contact information
+- `global` - Site-wide settings
+
+### Collection Types (Multiple Instances)
+- `service` - Individual therapy services
 
 ## ⚙️ Deployment
 
 Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
 
 ```
-yarn strapi deploy
+pnpm strapi deploy
 ```
 
 ## 📚 Learn more
