@@ -5,9 +5,10 @@ export default {
       path: '/seed/run',
       handler: 'seed.run',
       config: {
+        auth: false,
         policies: [],
         middlewares: [],
       },
     },
   ],
-};
+}

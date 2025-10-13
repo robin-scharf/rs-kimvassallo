@@ -14,39 +14,52 @@ export default {
 
     try {
       // Import and run the seed script logic
-      const seedData = require('../../../../data/kim-vassallo-data.json');
-      
+      // Use path.resolve to get absolute path from project root
+      const dataPath = path.resolve(
+        process.cwd(),
+        'data',
+        'kim-vassallo-data.json'
+      )
+      const seedData = require(dataPath)
+
       // Helper functions from seed script
       const getFileData = async (fileName: string) => {
-        const filePath = path.join(__dirname, '../../../../data/uploads', fileName);
-        const buffer = await fs.readFile(filePath);
-        const mimeType = mimeTypes.lookup(filePath);
-        
+        const filePath = path.resolve(
+          process.cwd(),
+          'data',
+          'uploads',
+          fileName
+        )
+        const buffer = await fs.readFile(filePath)
+        const mimeType = mimeTypes.lookup(filePath)
+
         return {
           path: filePath,
           name: fileName,
           type: mimeType || 'application/octet-stream',
           size: buffer.length,
-        };
-      };
+        }
+      }
 
       const uploadFile = async (fileName: string) => {
-        const fileData = await getFileData(fileName);
-        const existingFiles = await strapi.plugins.upload.services.upload.findMany({
-          filters: { name: fileData.name },
-        });
+        const fileData = await getFileData(fileName)
+        const existingFiles =
+          await strapi.plugins.upload.services.upload.findMany({
+            filters: { name: fileData.name },
+          })
 
         if (existingFiles.length > 0) {
-          return existingFiles[0];
+          return existingFiles[0]
         }
 
-        const uploadedFiles = await strapi.plugins.upload.services.upload.upload({
-          data: {},
-          files: fileData,
-        });
+        const uploadedFiles =
+          await strapi.plugins.upload.services.upload.upload({
+            data: {},
+            files: fileData,
+          })
 
-        return uploadedFiles[0];
-      };
+        return uploadedFiles[0]
+      }
 
       // Create Home
       await strapi.documents('api::home.home').create({
@@ -54,7 +67,7 @@ export default {
           ...seedData.home,
           publishedAt: Date.now(),
         },
-      });
+      })
 
       // Create About
       await strapi.documents('api::about.about').create({
@@ -62,7 +75,7 @@ export default {
           ...seedData.about,
           publishedAt: Date.now(),
         },
-      });
+      })
 
       // Create Approach
       await strapi.documents('api::approach.approach').create({
@@ -70,7 +83,7 @@ export default {
           ...seedData.approach,
           publishedAt: Date.now(),
         },
-      });
+      })
 
       // Create Contact
       await strapi.documents('api::contact.contact').create({
@@ -78,7 +91,7 @@ export default {
           ...seedData.contact,
           publishedAt: Date.now(),
         },
-      });
+      })
 
       // Create Global
       await strapi.documents('api::global.global').create({
@@ -86,7 +99,7 @@ export default {
           ...seedData.global,
           publishedAt: Date.now(),
         },
-      });
+      })
 
       // Create Services
       for (const service of seedData.services) {
@@ -95,33 +108,15 @@ export default {
             ...service,
             publishedAt: Date.now(),
           },
-        });
-      }
-
-      // Create Approach Items
-      for (const item of seedData.approachItems) {
-        await strapi.documents('api::approach-item.approach-item').create({
-          data: {
-            ...item,
-            publishedAt: Date.now(),
-          },
-        });
-      }
-
-      // Create Insurance Providers
-      for (const provider of seedData.insuranceProviders) {
-        await strapi.documents('api::insurance-provider.insurance-provider').create({
-          data: {
-            ...provider,
-            publishedAt: Date.now(),
-          },
-        });
+        })
       }
 
       // Set public permissions
-      const publicRole = await strapi.query('plugin::users-permissions.role').findOne({
-        where: { type: 'public' },
-      });
+      const publicRole = await strapi
+        .query('plugin::users-permissions.role')
+        .findOne({
+          where: { type: 'public' },
+        })
 
       if (publicRole) {
         const contentTypes = [
@@ -133,20 +128,26 @@ export default {
           'api::home.home',
           'api::insurance-provider.insurance-provider',
           'api::service.service',
-        ];
+        ]
 
         for (const contentType of contentTypes) {
-          const permissions = await strapi.query('plugin::users-permissions.permission').findMany({
-            where: { role: publicRole.id },
-          });
+          const permissions = await strapi
+            .query('plugin::users-permissions.permission')
+            .findMany({
+              where: { role: publicRole.id },
+            })
 
           for (const action of ['find', 'findOne']) {
-            const permission = permissions.find((p) => p.action === `${contentType}.${action}`);
+            const permission = permissions.find(
+              (p) => p.action === `${contentType}.${action}`
+            )
             if (permission && !permission.enabled) {
-              await strapi.query('plugin::users-permissions.permission').update({
-                where: { id: permission.id },
-                data: { enabled: true },
-              });
+              await strapi
+                .query('plugin::users-permissions.permission')
+                .update({
+                  where: { id: permission.id },
+                  data: { enabled: true },
+                })
             }
           }
         }
@@ -155,7 +156,7 @@ export default {
       ctx.body = {
         success: true,
         message: 'Database seeded successfully!',
-      };
+      }
     } catch (error) {
       strapi.log.error('Seeding error:', error);
       ctx.throw(500, `Seeding failed: ${error.message}`);

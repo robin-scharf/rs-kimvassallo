@@ -109,6 +109,12 @@ Go back to the admin panel and refresh the page. Check each content type:
 
 Open a new terminal and test the API endpoints:
 
+> **Note for WSL Users**: If you're running Strapi in WSL and `localhost:1337` doesn't work, you may need to use the WSL network bridge IP instead. Find it with:
+> ```bash
+> ip route | grep default | awk '{print $3}'
+> ```
+> Then use that IP (e.g., `http://172.23.112.1:1337`) instead of `localhost:1337` in the commands below.
+
 ### Test Home Endpoint
 ```bash
 curl http://localhost:1337/api/home | jq
@@ -225,6 +231,39 @@ Test editing content in the admin panel:
    curl "http://localhost:1337/api/services?sort=order:asc" | jq
    ```
 6. You should see 7 services now!
+
+## Step 9: Test Seed API Endpoint (Optional)
+
+The project includes a REST API endpoint to seed the database programmatically. This is useful for automated deployments or resetting the database.
+
+> **Note**: Replace `localhost:1337` with your WSL bridge IP if needed (e.g., `172.23.112.1:1337`)
+
+```bash
+# Seed the database via API
+curl -X POST http://localhost:1337/api/seed/run \
+  -H "x-seed-token: change-me-in-production" \
+  | jq
+```
+
+**Expected Response**:
+```json
+{
+  "success": true,
+  "message": "Database seeded successfully!"
+}
+```
+
+**Security Note**: 
+- The endpoint requires an `x-seed-token` header
+- Default token is `change-me-in-production`
+- In production, set `SEED_TOKEN` environment variable to a secure value
+- If the token is incorrect, you'll get a 401 Unauthorized response
+
+**When to use**:
+- Automated deployment scripts
+- Resetting development database
+- CI/CD pipelines
+- Initial production data setup
 
 ## 🐛 Troubleshooting
 
