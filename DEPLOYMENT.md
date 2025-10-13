@@ -26,9 +26,9 @@
 
 4. **Configure Build Settings**
    - Framework preset: **Next.js (Static HTML Export)**
-   - Build command: `cd frontend && pnpm install && pnpm build`
+   - Build command: `npm install && npm run build`
    - Build output directory: `frontend/out`
-   - Root directory: `/` (leave empty)
+   - Root directory: `frontend`
 
 5. **Add Environment Variable**
    - Click "Add variable"
