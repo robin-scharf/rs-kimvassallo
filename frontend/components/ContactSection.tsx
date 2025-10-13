@@ -5,8 +5,8 @@ import { useState, FormEvent } from 'react';
 import Link from 'next/link';
 
 interface ContactSectionProps {
-  data: Contact;
-  global: Global;
+  data: Contact | null;
+  global: Global | null;
 }
 
 export default function ContactSection({ data, global }: ContactSectionProps) {
@@ -25,6 +25,19 @@ export default function ContactSection({ data, global }: ContactSectionProps) {
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 3000);
   };
+
+  if (!data) {
+    return (
+      <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 uppercase tracking-wide text-center">
+            Contact
+          </h2>
+          <p className="text-center text-muted-foreground">Contact information coming soon...</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
@@ -181,15 +194,15 @@ export default function ContactSection({ data, global }: ContactSectionProps) {
               <h3 className="text-lg font-semibold mb-4" style={{ fontFamily: 'var(--font-lora), Lora, serif' }}>
                 {data.title || 'Contact'}
               </h3>
-              <p className="text-sm mb-4">{global.location}</p>
+              <p className="text-sm mb-4">{global?.location || 'Location'}</p>
 
               <div className="space-y-2 text-sm">
-                {global.noSurprisesActLink && (
+                {global?.noSurprisesActLink && (
                   <a href={global.noSurprisesActLink} target="_blank" rel="noopener noreferrer" className="block hover:text-teal-300 transition-colors border-b border-white pb-1 mb-3 inline-block">
                     No Surprises Act
                   </a>
                 )}
-                {global.footerText && (
+                {global?.footerText && (
                   <p className="text-sm leading-relaxed">
                     {global.footerText}
                   </p>
@@ -208,7 +221,7 @@ export default function ContactSection({ data, global }: ContactSectionProps) {
           <div className="border-t border-gray-600 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400">
               <div className="flex items-center gap-2">
-                <span>© {new Date().getFullYear()} {global.siteName || 'Kim Vassallo, LCSW-R'}</span>
+                <span>© {new Date().getFullYear()} {global?.siteName || 'Kim Vassallo, LCSW-R'}</span>
               </div>
               <div className="flex gap-4">
                 <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
@@ -216,7 +229,7 @@ export default function ContactSection({ data, global }: ContactSectionProps) {
                 <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
               </div>
             </div>
-            {global.footerDisclaimer && (
+            {global?.footerDisclaimer && (
               <p className="text-xs text-gray-400 text-center mt-6">
                 {global.footerDisclaimer}
               </p>

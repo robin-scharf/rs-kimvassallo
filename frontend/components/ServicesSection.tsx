@@ -4,7 +4,7 @@ interface ServicesSectionProps {
   data: Service[];
   approachItems: ApproachItem[];
   insuranceProviders: InsuranceProvider[];
-  global: Global;
+  global: Global | null;
 }
 
 export default function ServicesSection({ data, approachItems, insuranceProviders, global }: ServicesSectionProps) {
@@ -16,18 +16,24 @@ export default function ServicesSection({ data, approachItems, insuranceProvider
         </h2>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-20">
-          {data.map((service) => (
-            <div
-              key={service.id}
-              className="bg-[#3d6565] px-6 py-4 text-center"
-            >
-              <h3 className="text-base font-semibold text-white">
-                {service.title}
-              </h3>
-            </div>
-          ))}
-        </div>
+        {data && data.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-20">
+            {data.map((service) => (
+              <div
+                key={service.id}
+                className="bg-[#3d6565] px-6 py-4 text-center"
+              >
+                <h3 className="text-base font-semibold text-white">
+                  {service.title}
+                </h3>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center mb-20">
+            <p className="text-gray-300">Services information coming soon...</p>
+          </div>
+        )}
 
         {/* Three Column Section: Approaches, Insurance, Fees */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-12 border-t border-gray-500/30">
@@ -36,11 +42,15 @@ export default function ServicesSection({ data, approachItems, insuranceProvider
             <h3 className="text-sm font-normal uppercase tracking-widest mb-6 text-gray-300">
               Approaches
             </h3>
-            <ul className="space-y-3 text-sm">
-              {approachItems.map((item) => (
-                <li key={item.id}>{item.name}</li>
-              ))}
-            </ul>
+            {approachItems && approachItems.length > 0 ? (
+              <ul className="space-y-3 text-sm">
+                {approachItems.map((item) => (
+                  <li key={item.id}>{item.name}</li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-sm text-gray-400">Coming soon...</p>
+            )}
           </div>
 
           {/* Insurance Accepted */}
@@ -48,11 +58,15 @@ export default function ServicesSection({ data, approachItems, insuranceProvider
             <h3 className="text-sm font-normal uppercase tracking-widest mb-6 text-gray-300">
               Insurance Accepted
             </h3>
-            <ul className="space-y-3 text-sm">
-              {insuranceProviders.map((provider) => (
-                <li key={provider.id}>{provider.name}</li>
-              ))}
-            </ul>
+            {insuranceProviders && insuranceProviders.length > 0 ? (
+              <ul className="space-y-3 text-sm">
+                {insuranceProviders.map((provider) => (
+                  <li key={provider.id}>{provider.name}</li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-sm text-gray-400">Coming soon...</p>
+            )}
           </div>
 
           {/* Fees */}
@@ -61,7 +75,7 @@ export default function ServicesSection({ data, approachItems, insuranceProvider
               Fees
             </h3>
             <p className="text-sm">
-              {global.therapyFee || 'Individual therapy (50-55 min): $150'}
+              {global?.therapyFee || 'Individual therapy (50-55 min): $150'}
             </p>
           </div>
         </div>

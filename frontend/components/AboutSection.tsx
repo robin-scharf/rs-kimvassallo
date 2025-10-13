@@ -3,10 +3,23 @@ import RichText from './RichText';
 import Image from 'next/image';
 
 interface AboutSectionProps {
-  data: About;
+  data: About | null;
 }
 
 export default function AboutSection({ data }: AboutSectionProps) {
+  if (!data) {
+    return (
+      <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-12 uppercase tracking-wide text-center">
+            About
+          </h2>
+          <p className="text-center text-muted-foreground">Content coming soon...</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-4xl mx-auto">
