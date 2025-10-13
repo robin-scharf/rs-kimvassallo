@@ -12,13 +12,11 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 
-# Copy source code
+# Copy all source code
 COPY . .
 
-# Set NODE_ENV to production
+# Build the application
 ENV NODE_ENV=production
-
-# Build admin panel
 RUN pnpm build
 
 # Production stage
@@ -32,18 +30,20 @@ WORKDIR /app
 # Copy package files
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-# Install production dependencies only
-RUN pnpm install --frozen-lockfile --prod
+# Install ALL dependencies (not just production for now)
+RUN pnpm install --frozen-lockfile
 
-# Copy built files from build stage
+# Copy everything from build stage (compiled code + source for reference)
 COPY --from=build /app/dist ./dist
-COPY --from=build /app/build ./build
 COPY --from=build /app/public ./public
-COPY --from=build /app/config ./config
 COPY --from=build /app/database ./database
-
-# Copy data directory (for seeding)
 COPY --from=build /app/data ./data
+
+# Create symlink so Strapi can find config in production mode
+RUN ln -sf /app/dist/config /app/config
+
+# Create .tmp directory for SQLite database
+RUN mkdir -p .tmp
 
 # Expose port
 EXPOSE 1337
@@ -51,5 +51,9 @@ EXPOSE 1337
 # Set NODE_ENV
 ENV NODE_ENV=production
 
-# Start Strapi
-CMD ["pnpm", "start"]
+# Set Strapi to use the compiled config
+ENV STRAPI_DISABLE_UPDATE_NOTIFICATION=true
+ENV STRAPI_HIDE_STARTUP_MESSAGE=false
+
+# Start Strapi - use the start script with explicit host binding
+CMD ["sh", "-c", "pnpm start"]
