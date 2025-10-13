@@ -5,8 +5,13 @@ import ApproachSection from '@/components/ApproachSection';
 import ServicesSection from '@/components/ServicesSection';
 import ContactSection from '@/components/ContactSection';
 
+// Force dynamic rendering for this page to handle build-time API failures
+export const dynamic = 'force-static';
+export const dynamicParams = true;
+
 export default async function Home() {
-  const [home, about, approach, services, contact, global, approachItems, insuranceProviders] = await Promise.all([
+  // Fetch all data with fallbacks to prevent build failures
+  const [home, about, approach, services, contact, global, approachItems, insuranceProviders] = await Promise.allSettled([
     getHome(),
     getAbout(),
     getApproach(),
@@ -15,14 +20,14 @@ export default async function Home() {
     getGlobal(),
     getApproachItems(),
     getInsuranceProviders(),
-  ]);
+  ]).then(results => results.map(result => result.status === 'fulfilled' ? result.value : null));
 
   return (
     <main className="min-h-screen">
       <HeroSection data={home} global={global} />
       <AboutSection data={about} />
       <ApproachSection data={approach} />
-      <ServicesSection data={services} approachItems={approachItems} insuranceProviders={insuranceProviders} global={global} />
+      <ServicesSection data={services || []} approachItems={approachItems || []} insuranceProviders={insuranceProviders || []} global={global} />
       <ContactSection data={contact} global={global} />
     </main>
   );

@@ -11,14 +11,17 @@ export async function fetchAPI(endpoint: string, options = {}) {
     })
 
     if (!response.ok) {
-      console.error(`API call failed: ${response.status} for ${endpoint}`)
+      console.warn(`API call failed: ${response.status} for ${endpoint}`)
       return null
     }
 
     const data = await response.json()
     return data
   } catch (error) {
-    console.error('API Error:', error)
+    console.warn(
+      `API Error for ${endpoint}:`,
+      error instanceof Error ? error.message : 'Unknown error'
+    )
     return null
   }
 }
@@ -30,7 +33,6 @@ export async function getHome() {
 
 export async function getAbout() {
   const data = await fetchAPI('/about?populate=profilePhoto&populate=blocks')
-  console.log('About data:', JSON.stringify(data, null, 2))
   return data?.data || null
 }
 
