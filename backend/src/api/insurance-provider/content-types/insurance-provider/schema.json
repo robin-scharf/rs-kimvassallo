@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "insurance_providers",
+  "info": {
+    "singularName": "insurance-provider",
+    "pluralName": "insurance-providers",
+    "displayName": "Insurance Provider"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}
