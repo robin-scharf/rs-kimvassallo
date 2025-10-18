@@ -7,7 +7,9 @@ export async function fetchAPI(endpoint: string, options = {}) {
   try {
     const response = await fetch(url, {
       ...options,
-      next: { revalidate: 0 }, // On-demand revalidation only (no time-based cache)
+      // Use short revalidation (1 second) as fallback + on-demand revalidation
+      // This ensures fresh data while allowing webhook-based instant updates
+      next: { revalidate: 1 },
     })
 
     if (!response.ok) {

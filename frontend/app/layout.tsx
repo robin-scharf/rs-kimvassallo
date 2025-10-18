@@ -10,8 +10,9 @@ const lora = Lora({
   variable: '--font-lora',
 });
 
-// Use on-demand revalidation only (triggered by Strapi webhooks)
-export const revalidate = 0;
+// Use short revalidation (1 second) as fallback + on-demand revalidation via webhooks
+// This ensures fresh data while allowing webhook-based instant updates
+export const revalidate = 1;
 
 export async function generateMetadata(): Promise<Metadata> {
   const global = await getGlobal();
