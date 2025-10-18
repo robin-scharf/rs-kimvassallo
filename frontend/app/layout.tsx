@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Lora } from "next/font/google";
 import "./globals.css";
+import { getGlobal } from "@/lib/api";
 
 const lora = Lora({
   weight: ['400', '500', '600', '700'],
@@ -9,10 +10,21 @@ const lora = Lora({
   variable: '--font-lora',
 });
 
-export const metadata: Metadata = {
-  title: "Kim Vassallo, LCSW-R - Therapy for Women",
-  description: "Licensed Clinical Social Worker specializing in women's health, perinatal mental health, and grief and loss support.",
-};
+// Default revalidation for all pages (ISR - Incremental Static Regeneration)
+export const revalidate = 60;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const global = await getGlobal();
+
+  // Fallback values if API fails
+  const fallbackTitle = "Kim Vassallo, LCSW-R - Therapy for Women";
+  const fallbackDescription = "Licensed Clinical Social Worker specializing in women's health, perinatal mental health, and grief and loss support.";
+
+  return {
+    title: global?.defaultSeo?.metaTitle || global?.siteName || fallbackTitle,
+    description: global?.defaultSeo?.metaDescription || global?.siteDescription || fallbackDescription,
+  };
+}
 
 export default function RootLayout({
   children,

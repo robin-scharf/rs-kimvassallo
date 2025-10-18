@@ -5,10 +5,6 @@ import ApproachSection from '@/components/ApproachSection';
 import ServicesSection from '@/components/ServicesSection';
 import ContactSection from '@/components/ContactSection';
 
-// Force dynamic rendering for this page to handle build-time API failures
-export const dynamic = 'force-static';
-export const dynamicParams = true;
-
 export default async function Home() {
   // Fetch all data with fallbacks to prevent build failures
   const [home, about, approach, services, contact, global, approachItems, insuranceProviders] = await Promise.allSettled([
