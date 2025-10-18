@@ -1,4 +1,7 @@
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'
+  - esbuild
+  - rclone.js
   - sharp
   - unrs-resolver
+  - workerd

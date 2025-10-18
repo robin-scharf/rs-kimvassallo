@@ -1,0 +1,9 @@
+name = "rs-kimvassallo"
+main = ".open-next/worker.js"
+compatibility_date = "2025-01-01"
+
+[site]
+bucket = ".open-next/assets"
+
+[vars]
+NODE_ENV = "production"
