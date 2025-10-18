@@ -10,6 +10,11 @@
 !.yarn/releases
 !.yarn/versions
 
+# Build output
+/dist
+/build
+.open-next/
+
 # testing
 /coverage
 
