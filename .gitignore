@@ -14,6 +14,7 @@
 /dist
 /build
 .open-next/
+.wrangler/
 
 # testing
 /coverage
