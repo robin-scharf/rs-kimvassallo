@@ -1,21 +1,13 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  output: 'export',
   images: {
-    unoptimized: true, // Required for static export
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '*.strapiapp.com',
-      },
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '1337',
-      },
+      { protocol: 'https', hostname: '*.strapiapp.com' },
+      { protocol: 'http', hostname: 'localhost', port: '1337' },
     ],
   },
+  experimental: { ppr: false },
 }
 
-export default nextConfig;
+export default nextConfig
