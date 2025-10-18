@@ -1,6 +1,6 @@
 name = "rs-kimvassallo"
 compatibility_date = "2025-01-01"
-pages_build_output_dir = ".open-next/worker"
+pages_build_output_dir = ".open-next"
 
 [vars]
 NODE_ENV = "production"
