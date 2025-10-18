@@ -1,12 +1,7 @@
 name = "rs-kimvassallo"
-main = ".open-next/worker.js"
 compatibility_date = "2025-01-01"
 compatibility_flags = ["nodejs_compat"]
-pages_build_output_dir = ".open-next/"
-
-[assets]
-directory = ".open-next/assets"
-binding = "RS_KIMVASSALLO_ASSETS"
+pages_build_output_dir = ".open-next"
 
 [vars]
 NODE_ENV = "production"
