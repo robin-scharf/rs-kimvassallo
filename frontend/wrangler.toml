@@ -1,6 +1,12 @@
 name = "rs-kimvassallo"
+main = ".open-next/worker.js"
 compatibility_date = "2025-01-01"
-pages_build_output_dir = ".open-next"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
 
 [vars]
 NODE_ENV = "production"
+NEXT_PUBLIC_STRAPI_API_URL = "https://respected-happiness-2f4bbbe5dd.strapiapp.com/api"
