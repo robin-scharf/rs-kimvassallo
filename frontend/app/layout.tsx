@@ -10,8 +10,8 @@ const lora = Lora({
   variable: '--font-lora',
 });
 
-// Default revalidation for all pages (ISR - Incremental Static Regeneration)
-export const revalidate = 10;
+// Use on-demand revalidation only (triggered by Strapi webhooks)
+export const revalidate = 0;
 
 export async function generateMetadata(): Promise<Metadata> {
   const global = await getGlobal();

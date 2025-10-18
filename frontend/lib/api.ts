@@ -7,7 +7,7 @@ export async function fetchAPI(endpoint: string, options = {}) {
   try {
     const response = await fetch(url, {
       ...options,
-      next: { revalidate: 10 }, // Revalidate every 10 seconds
+      next: { revalidate: 0 }, // On-demand revalidation only (no time-based cache)
     })
 
     if (!response.ok) {
