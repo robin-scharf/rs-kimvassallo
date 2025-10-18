@@ -4,6 +4,8 @@ const API_URL =
 export async function fetchAPI(endpoint: string, options = {}) {
   const url = `${API_URL}${endpoint}`
 
+  console.log(`[API] Fetching: ${url}`)
+
   try {
     const response = await fetch(url, {
       ...options,
@@ -12,17 +14,25 @@ export async function fetchAPI(endpoint: string, options = {}) {
       next: { revalidate: 1 },
     })
 
+    console.log(`[API] Response status for ${endpoint}: ${response.status}`)
+
     if (!response.ok) {
-      console.warn(`API call failed: ${response.status} for ${endpoint}`)
+      console.error(
+        `[API] Failed: ${response.status} ${response.statusText} for ${endpoint}`
+      )
+      const errorText = await response.text()
+      console.error(`[API] Error body:`, errorText)
       return null
     }
 
     const data = await response.json()
+    console.log(`[API] Success for ${endpoint}:`, data)
     return data
   } catch (error) {
-    console.warn(
-      `API Error for ${endpoint}:`,
-      error instanceof Error ? error.message : 'Unknown error'
+    console.error(
+      `[API] Error for ${endpoint}:`,
+      error instanceof Error ? error.message : 'Unknown error',
+      error
     )
     return null
   }

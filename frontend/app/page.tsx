@@ -5,6 +5,10 @@ import ApproachSection from '@/components/ApproachSection';
 import ServicesSection from '@/components/ServicesSection';
 import ContactSection from '@/components/ContactSection';
 
+// Force dynamic rendering to ensure fresh data from Strapi
+export const dynamic = 'force-dynamic';
+export const revalidate = 1;
+
 export default async function Home() {
   // Fetch all data with fallbacks to prevent build failures
   const [home, about, approach, services, contact, global, approachItems, insuranceProviders] = await Promise.allSettled([
