@@ -1,7 +1,16 @@
 name = "rs-kimvassallo"
+main = ".open-next/worker.js"
 compatibility_date = "2025-01-01"
 compatibility_flags = ["nodejs_compat"]
-pages_build_output_dir = ".open-next"
+
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+[[r2_buckets]]
+binding = "NEXT_INC_CACHE_R2_BUCKET"
+bucket_name = "rs-kimvassallo-cache"
+preview_bucket_name = "rs-kimvassallo-cache-preview"
 
 [vars]
 NODE_ENV = "production"
