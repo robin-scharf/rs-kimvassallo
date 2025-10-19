@@ -58,12 +58,9 @@ export default {
     if (publicRole) {
       const contentTypes = [
         'api::about.about',
-        'api::approach.approach',
-        'api::approach-item.approach-item',
         'api::contact.contact',
         'api::global.global',
         'api::home.home',
-        'api::insurance-provider.insurance-provider',
         'api::privacy-policy.privacy-policy',
         'api::service.service',
         'api::terms-of-service.terms-of-service',
@@ -103,12 +100,9 @@ export default {
     const contentTypesToWatch = [
       'api::home.home',
       'api::about.about',
-      'api::approach.approach',
-      'api::approach-item.approach-item',
       'api::service.service',
       'api::contact.contact',
       'api::global.global',
-      'api::insurance-provider.insurance-provider',
       'api::privacy-policy.privacy-policy',
       'api::terms-of-service.terms-of-service',
     ]
