@@ -22,12 +22,6 @@ Customized for: **Kim Vassallo, LCSW-R**
 └─────────────────────────────────────────────────┘
                       ↓
 ┌─────────────────────────────────────────────────┐
-│                  APPROACH                       │
-│  Therapeutic philosophy & methods               │
-│  Treatment modalities                           │
-└─────────────────────────────────────────────────┘
-                      ↓
-┌─────────────────────────────────────────────────┐
 │                  SERVICES                       │
 │  • Women's Issues                               │
 │  • Women's Health                               │
@@ -78,18 +72,7 @@ Customized for: **Kim Vassallo, LCSW-R**
 
 **API**: `GET /api/about?populate=blocks`
 
-#### 3. Approach (`api::approach.approach`)
-
-```json
-{
-  "title": "My Approach",
-  "content": "Therapeutic philosophy and methods..."
-}
-```
-
-**API**: `GET /api/approach`
-
-#### 4. Contact (`api::contact.contact`)
+#### 3. Contact (`api::contact.contact`)
 
 ```json
 {
@@ -103,7 +86,7 @@ Customized for: **Kim Vassallo, LCSW-R**
 
 **API**: `GET /api/contact`
 
-#### 5. Global (`api::global.global`)
+#### 4. Global (`api::global.global`)
 
 ```json
 {
@@ -180,7 +163,6 @@ rs-kimvassallo/
 │   ├── api/
 │   │   ├── home/           ← New content type
 │   │   ├── about/          ← Existing
-│   │   ├── approach/       ← New content type
 │   │   ├── service/        ← New content type
 │   │   ├── contact/        ← New content type
 │   │   └── global/         ← Updated
@@ -217,7 +199,6 @@ rs-kimvassallo/
 - ✅ Contact form at bottom
 - ✅ Name changed to Kim Vassallo
 - ✅ Professional therapist design
-- ✅ Page order: Home/About/Approach/Services/Contact
 
 ### 🎯 Content Management
 
@@ -265,16 +246,15 @@ http://localhost:1337/api
 ```javascript
 // Fetch all page data
 const fetchPageData = async () => {
-  const [home, about, approach, services, contact, global] = await Promise.all([
+  const [home, about, services, contact, global] = await Promise.all([
     fetch('/api/home').then((r) => r.json()),
     fetch('/api/about?populate=blocks').then((r) => r.json()),
-    fetch('/api/approach').then((r) => r.json()),
     fetch('/api/services?sort=order:asc').then((r) => r.json()),
     fetch('/api/contact').then((r) => r.json()),
     fetch('/api/global?populate=defaultSeo').then((r) => r.json()),
   ])
 
-  return { home, about, approach, services, contact, global }
+  return { home, about, services, contact, global }
 }
 ```
 
