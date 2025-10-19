@@ -58,19 +58,8 @@ Articles and About page use these via `blocks` dynamic zones.
 pnpm develop          # Start with auto-reload (development mode)
 pnpm start            # Production mode (no auto-reload)
 pnpm build            # Build admin panel
-pnpm seed:example     # Run database seeding script
 pnpm strapi console   # Interactive Strapi console
 ```
-
-### Database Seeding Pattern
-
-The `scripts/seed.js` file demonstrates the project's data import pattern:
-
-1. Check if first run via plugin store (`strapi.store()`)
-2. Upload media files using `strapi.plugin('upload').service('upload').upload()`
-3. Create entries using `strapi.documents('api::{model}.{model}').create()`
-4. Set public permissions with `strapi.query('plugin::users-permissions.permission').create()`
-5. Handle dynamic zone blocks by uploading referenced files first, then updating block data
 
 **Key functions:**
 
@@ -111,7 +100,6 @@ All API identifiers use the format `api::{content-type}.{content-type}`:
 ### File Organization
 
 - Media uploads stored in `public/uploads/` and `data/uploads/`
-- Seed data structure in `data/data.json` matches schema structure
 - Generated types in `types/generated/` (components.d.ts, contentTypes.d.ts)
 
 ## Working with Strapi
@@ -163,5 +151,4 @@ await strapi.documents('api::article.article').create({
 - **Strapi v5** uses the newer Documents API (`strapi.documents()`) instead of Entity Service
 - Admin panel is a separate React app built with Vite (see `src/admin/`)
 - Native dependencies (better-sqlite3) require rebuild on install via pnpm workspace config
-- First-time setup creates default public role with no permissions - seed script sets these
 - Dynamic zone components must include `__component` field matching the component path

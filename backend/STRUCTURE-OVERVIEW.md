@@ -175,11 +175,7 @@ rs-kimvassallo/
 │   │       └── seo.json
 │   └── index.ts
 ├── data/
-│   ├── kim-vassallo-data.json  ← Seed data
 │   └── uploads/                 ← Media files
-├── scripts/
-│   ├── seed.js                  ← Original seed
-│   └── seed-kim-vassallo.js     ← New seed script
 ├── config/
 │   ├── database.ts
 │   ├── server.ts
@@ -221,12 +217,6 @@ rs-kimvassallo/
 
 ```bash
 pnpm develop
-```
-
-### Seed Content
-
-```bash
-pnpm seed
 ```
 
 ### Access Admin
@@ -280,27 +270,3 @@ const fetchPageData = async () => {
 │ Admin Panel  │ ← Content management
 └──────────────┘
 ```
-
-## 🎓 Next Steps
-
-1. ✅ Strapi CMS setup (Complete)
-2. ✅ Content types created (Complete)
-3. ✅ Seed data prepared (Complete)
-4. 🔲 Build frontend application
-5. 🔲 Connect frontend to Strapi API
-6. 🔲 Implement design/styling
-7. 🔲 Add contact form functionality
-8. 🔲 Deploy both backend & frontend
-
-## 💡 Tips
-
-- Edit content in admin panel at any time
-- Changes are immediately available via API
-- Add more services as needed
-- Upload images for hero, about, services
-- Customize global SEO settings
-- Use dynamic blocks for rich content
-
----
-
-**Ready to build your frontend!** 🚀
