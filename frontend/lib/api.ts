@@ -43,6 +43,11 @@ export async function getHome() {
   return data?.data || null
 }
 
+export async function getHero() {
+  const data = await fetchAPI('/hero?populate=backgroundImage')
+  return data?.data || null
+}
+
 export async function getAbout() {
   const data = await fetchAPI('/about?populate=profilePhoto&populate=blocks')
   return data?.data || null
@@ -54,7 +59,19 @@ export async function getApproach() {
 }
 
 export async function getServices() {
-  const data = await fetchAPI('/services?sort=order:asc')
+  const data = await fetchAPI('/services?populate=image&sort=order:asc')
+  return data?.data || []
+}
+
+export async function getService(slug: string) {
+  const data = await fetchAPI(
+    `/services?filters[slug][$eq]=${slug}&populate=image`
+  )
+  return data?.data?.[0] || null
+}
+
+export async function getInfoItems() {
+  const data = await fetchAPI('/info-items?sort=order:asc')
   return data?.data || []
 }
 
@@ -68,13 +85,13 @@ export async function getGlobal() {
   return data?.data || null
 }
 
-export async function getApproachItems() {
-  const data = await fetchAPI('/approach-items?sort=order:asc')
-  return data?.data || []
+export async function getFooter() {
+  const data = await fetchAPI('/footer?populate=links')
+  return data?.data || null
 }
 
-export async function getInsuranceProviders() {
-  const data = await fetchAPI('/insurance-providers?sort=order:asc')
+export async function getApproachItems() {
+  const data = await fetchAPI('/approach-items?sort=order:asc')
   return data?.data || []
 }
 

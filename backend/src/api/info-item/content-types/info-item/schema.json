@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "info_items",
+  "info": {
+    "singularName": "info-item",
+    "pluralName": "info-items",
+    "displayName": "Info Item",
+    "description": "Information items like fees, displayed below services"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "buttonText": {
+      "type": "string",
+      "required": false
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

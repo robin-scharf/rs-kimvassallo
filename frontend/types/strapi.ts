@@ -11,6 +11,20 @@ export interface Home {
   }
 }
 
+export interface Hero {
+  id: number
+  documentId: string
+  title: string
+  subtitle?: string
+  backgroundImage?: {
+    url: string
+    alternativeText: string
+  }
+  backgroundColor?: string
+  ctaButtonText?: string
+  ctaButtonLink?: string
+}
+
 export interface About {
   id: number
   documentId: string
@@ -34,6 +48,21 @@ export interface Service {
   documentId: string
   title: string
   description: string
+  image?: {
+    url: string
+    alternativeText: string
+  }
+  buttonText?: string
+  slug: string
+  order: number
+}
+
+export interface InfoItem {
+  id: number
+  documentId: string
+  title: string
+  description: string
+  buttonText?: string
   order: number
 }
 
@@ -54,7 +83,6 @@ export interface Global {
   siteDescription: string
   location: string
   offersOnlineAppointments: boolean
-  acceptsInsurance: boolean
   footerText?: string
   footerDisclaimer?: string
   noSurprisesActLink?: string
@@ -65,14 +93,21 @@ export interface Global {
   }
 }
 
-export interface ApproachItem {
+export interface Footer {
   id: number
   documentId: string
-  name: string
-  order: number
+  legalText?: string
+  links?: FooterLink[]
 }
 
-export interface InsuranceProvider {
+export interface FooterLink {
+  id: number
+  label: string
+  url: string
+  openInNewTab: boolean
+}
+
+export interface ApproachItem {
   id: number
   documentId: string
   name: string

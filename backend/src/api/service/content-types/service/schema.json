@@ -17,8 +17,25 @@
       "required": true
     },
     "description": {
-      "type": "text",
+      "type": "richtext",
       "required": false
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "buttonText": {
+      "type": "string",
+      "required": false
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
     },
     "order": {
       "type": "integer",

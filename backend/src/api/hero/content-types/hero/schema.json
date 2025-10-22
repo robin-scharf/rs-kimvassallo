@@ -1,0 +1,47 @@
+{
+  "kind": "singleType",
+  "collectionName": "heros",
+  "info": {
+    "singularName": "hero",
+    "pluralName": "heros",
+    "displayName": "Hero",
+    "description": "Hero section with background image"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subtitle": {
+      "type": "text",
+      "required": false
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "backgroundColor": {
+      "type": "string",
+      "required": false,
+      "default": "#b08080"
+    },
+    "ctaButtonText": {
+      "type": "string",
+      "required": false,
+      "default": "Contact"
+    },
+    "ctaButtonLink": {
+      "type": "string",
+      "required": false,
+      "default": "#contact"
+    }
+  }
+}

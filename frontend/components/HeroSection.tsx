@@ -1,13 +1,24 @@
-import { Home, Global } from '@/types/strapi';
+import { Home, Hero, Global } from '@/types/strapi';
 
 interface HeroSectionProps {
   data: Home | null;
+  hero: Hero | null;
   global: Global | null;
 }
 
-export default function HeroSection({ data, global }: HeroSectionProps) {
+export default function HeroSection({ data, hero, global }: HeroSectionProps) {
   const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL?.replace('/api', '') || 'http://localhost:1337';
-  const heroImageUrl = data?.heroImage?.url ? `${strapiUrl}${data.heroImage.url}` : null;
+
+  // Use hero background image if available, otherwise fallback to home heroImage
+  const backgroundImageUrl = hero?.backgroundImage?.url
+    ? `${strapiUrl}${hero.backgroundImage.url}`
+    : (data?.heroImage?.url ? `${strapiUrl}${data.heroImage.url}` : null);
+
+  const backgroundColor = hero?.backgroundColor || '#b08080';
+  const title = hero?.title || data?.tagline || 'Professional Therapy Services';
+  const subtitle = hero?.subtitle || data?.description || '';
+  const ctaButtonText = hero?.ctaButtonText || 'Contact';
+  const ctaButtonLink = hero?.ctaButtonLink || '#contact';
 
   return (
     <>
@@ -24,43 +35,42 @@ export default function HeroSection({ data, global }: HeroSectionProps) {
 
           {/* Navigation */}
           <nav className="mt-8 flex justify-center gap-12 text-base">
-            <a href="#home" className="text-teal-700 hover:text-teal-800 font-medium">Home</a>
             <a href="#about" className="text-teal-700 hover:text-teal-800 font-medium">About</a>
             <a href="#services" className="text-teal-700 hover:text-teal-800 font-medium">Services</a>
-            <a href="#contact" className="text-teal-700 hover:text-teal-800 font-medium">Location</a>
+            <a href="#contact" className="text-teal-700 hover:text-teal-800 font-medium">Contact</a>
           </nav>
         </div>
       </header>
 
       {/* Hero Section with Background Image */}
       <section
-        id="home"
+        id="hero"
         className="relative bg-cover bg-center min-h-[400px] flex items-center justify-center"
         style={{
-          backgroundImage: heroImageUrl
-            ? `linear-gradient(rgba(168, 118, 112, 0.7), rgba(168, 118, 112, 0.7)), url(${heroImageUrl})`
-            : 'linear-gradient(rgba(168, 118, 112, 0.7), rgba(168, 118, 112, 0.7))',
-          backgroundColor: '#a87670',
+          backgroundImage: backgroundImageUrl
+            ? `linear-gradient(rgba(168, 118, 112, 0.7), rgba(168, 118, 112, 0.7)), url(${backgroundImageUrl})`
+            : undefined,
+          backgroundColor: backgroundColor,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
           <h2 className="text-3xl sm:text-5xl font-light text-white mb-6 leading-tight" style={{ fontFamily: 'var(--font-lora), Lora, serif' }}>
-            {data?.tagline || 'Professional Therapy Services'}
+            {title}
           </h2>
 
-          {data?.description && (
+          {subtitle && (
             <p className="text-lg sm:text-xl text-white/95 max-w-3xl mx-auto leading-relaxed mb-8">
-              {data.description}
+              {subtitle}
             </p>
           )}
 
           <a
-            href="#contact"
+            href={ctaButtonLink}
             className="inline-block bg-teal-800 text-white px-8 py-3 text-base font-medium hover:bg-teal-900 transition-colors"
           >
-            Contact
+            {ctaButtonText}
           </a>
         </div>
       </section>
