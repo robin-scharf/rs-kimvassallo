@@ -1,5 +1,6 @@
 import { getHeader, getMenuItems, getHero, getAbout, getServices, getContact, getGlobal, getFooter } from '@/lib/api';
 import HeroSection from '@/components/HeroSection';
+import { ModeToggle } from '@/components/ModeToggle';
 import HeaderSection from '@/components/HeaderSection';
 import AboutSection from '@/components/AboutSection';
 import ServicesSection from '@/components/ServicesSection';
@@ -24,14 +25,18 @@ export default async function Home() {
   ]).then(results => results.map(result => result.status === 'fulfilled' ? result.value : null));
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen relative">
+      {/* Top right theme toggle */}
+      <div className="fixed top-6 right-6 z-50">
+        <ModeToggle />
+      </div>
       <HeaderSection header={header} menuItems={menuItems || []} />
       <HeroSection hero={hero} />
       <AboutSection data={about} />
       <ServicesSection data={services} />
       <ContactSection data={contact} />
       {footer && (
-        <footer className="bg-[#f5f1ed] border-t border-gray-200 py-8">
+        <footer className="bg-background dark:bg-background border-t border-border py-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             {footer.copyrightText && (
               <div
@@ -43,7 +48,7 @@ export default async function Home() {
               {footer.privacyLink && (
                 <a
                   href={footer.privacyLink}
-                  className="text-teal-700 hover:text-teal-800 font-medium text-sm"
+                  className="text-primary hover:text-primary-foreground font-medium text-sm"
                 >
                   Privacy Policy
                 </a>
@@ -51,7 +56,7 @@ export default async function Home() {
               {footer.termsLink && (
                 <a
                   href={footer.termsLink}
-                  className="text-teal-700 hover:text-teal-800 font-medium text-sm"
+                  className="text-primary hover:text-primary-foreground font-medium text-sm"
                 >
                   Terms of Service
                 </a>
@@ -61,7 +66,7 @@ export default async function Home() {
         </footer>
       )}
       <ScrollToTop />
+      {/* Bottom right theme toggle for mobile/scroll */}
     </main>
   );
 }
-

@@ -14,7 +14,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
 
   if (!data) {
     return (
-      <section id="services" className="py-20 px-4 sm:px-6 lg:px-8 bg-[#2d5252] text-white">
+      <section id="services" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-[#2d5252] text-black dark:text-white">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-sm font-normal mb-12 uppercase tracking-widest text-center text-gray-300">
             Services
@@ -30,20 +30,20 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
   return (
     <motion.section
       id="services"
-      className="py-20 px-4 sm:px-6 lg:px-8 bg-[#2d5252] text-white"
+      className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-[#2d5252] text-black dark:text-white"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-sm font-normal mb-12 uppercase tracking-widest text-center text-gray-300">
+        <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-12 uppercase tracking-wide text-center">
           {data.title || 'Services'}
         </h2>
 
         {/* Subtitle */}
         {data.subtitle && (
-          <p className="text-lg text-center text-gray-300 mb-12">
+          <p className="text-lg text-center text-muted-foreground mb-8">
             {data.subtitle}
           </p>
         )}
@@ -63,7 +63,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                       initial={{ borderRadius: 20, boxShadow: '0 2px 16px rgba(0,0,0,0.12)', scale: 0.97, opacity: 0 }}
                       animate={{ borderRadius: 20, boxShadow: '0 2px 16px rgba(0,0,0,0.12)', scale: 1, opacity: 1 }}
                       transition={{ type: 'spring', stiffness: 200, damping: 30 }}
-                      className={`bg-[#1c1c1e] overflow-hidden cursor-pointer`}
+                      className={`bg-gray-100 dark:bg-[#1c1c1e] overflow-hidden cursor-pointer rounded-md`}
                       onClick={() => setOpenCard(String(column.id))}
                     >
                       <div className="relative w-full h-48 mb-6">
@@ -88,11 +88,11 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                         )}
                       </div>
                       <div className="px-6 pb-6">
-                        <h3 className="text-xl font-semibold text-white mb-2">
+                        <h3 className="text-xl font-semibold text-black dark:text-white mb-2">
                           {column.title}
                         </h3>
                         {column.subtitle && (
-                          <p className="text-sm text-gray-400 mb-4">
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
                             {column.subtitle}
                           </p>
                         )}
@@ -115,7 +115,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                 >
                   <motion.div
                     layout
-                    className="bg-[#1c1c1e] rounded-2xl shadow-2xl overflow-hidden max-w-lg w-full relative"
+                    className="bg-gray-100 dark:bg-[#1c1c1e] rounded-md shadow-2xl overflow-hidden max-w-lg w-full relative"
                     initial={{ scale: 0.95, y: 40 }}
                     animate={{ scale: 1, y: 0 }}
                     exit={{ scale: 0.95, y: 40 }}
@@ -149,24 +149,24 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                             )}
                           </div>
                           <div className="px-6 pb-6">
-                            <h3 className="text-xl font-semibold text-white mb-2">
+                            <h3 className="text-xl font-semibold text-black dark:text-white mb-2">
                               {column.title}
                             </h3>
                             {column.subtitle && (
-                              <p className="text-sm text-gray-400 mb-4">
+                              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
                                 {column.subtitle}
                               </p>
                             )}
                             {column.description && (
                               <div
-                                className="text-sm text-gray-300 mb-4 prose prose-sm prose-invert"
+                                className="text-sm text-gray-700 dark:text-gray-300 mb-4 prose prose-sm dark:prose-invert"
                                 dangerouslySetInnerHTML={{ __html: column.description }}
                               />
                             )}
                             {column.buttonText && column.buttonLink && (
                               <a
                                 href={column.buttonLink}
-                                className="inline-block mt-4 text-sm text-teal-300 hover:text-teal-200 font-medium"
+                                className="inline-block mt-4 text-sm text-teal-700 dark:text-teal-300 hover:text-teal-900 dark:hover:text-teal-200 font-medium"
                               >
                                 {column.buttonText} →
                               </a>
@@ -182,14 +182,14 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
           </>
         ) : (
           <div className="text-center">
-            <p className="text-gray-300">No services available at this time.</p>
+              <p className="text-gray-700 dark:text-gray-300">No services available at this time.</p>
           </div>
         )}
 
         {/* Online Appointments Info */}
         {data.offersOnlineAppointments && (
           <div className="mt-12 pt-8 border-t border-gray-500/30 text-center">
-            <p className="text-sm text-gray-300">
+            <p className="text-sm text-gray-700 dark:text-gray-300">
               ✓ Online appointments available
             </p>
           </div>

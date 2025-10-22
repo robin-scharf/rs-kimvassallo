@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lora } from "next/font/google";
 import "./globals.css";
 import { getGlobal } from "@/lib/api";
+import { ThemeProvider } from "../components/ThemeProvider"
 
 const lora = Lora({
   weight: ['400', '500', '600', '700'],
@@ -33,9 +34,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className={`font-sans antialiased ${lora.variable}`} style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}>
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -99,7 +99,7 @@ export default function ContactSection({ data }: ContactSectionProps) {
                     </div>
                     <div>
                       <p className="font-medium text-foreground mb-1">Location</p>
-                      <p className="text-muted-foreground">{data.address}</p>
+                      <p className="text-primary">{data.address}</p>
                     </div>
                   </div>
                 )}

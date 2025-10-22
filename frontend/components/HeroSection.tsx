@@ -49,19 +49,19 @@ export default function HeroSection({ hero }: HeroSectionProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
       >
-        <h2 className="text-3xl sm:text-5xl font-light text-white mb-6 leading-tight" style={{ fontFamily: 'var(--font-lora), Lora, serif' }}>
+        <h2 className="text-3xl sm:text-5xl font-light text-black dark:text-white mb-6 leading-tight" style={{ fontFamily: 'var(--font-lora), Lora, serif' }}>
           {title}
         </h2>
 
         {subtitle && (
-          <p className="text-lg sm:text-xl text-white/95 max-w-3xl mx-auto leading-relaxed mb-8">
+          <p className="text-lg sm:text-xl text-black dark:text-white/95 max-w-3xl mx-auto leading-relaxed mb-8">
             {subtitle}
           </p>
         )}
 
         <a
           href={ctaButtonAnchor}
-          className="inline-block bg-teal-800 text-white px-8 py-3 text-base font-medium hover:bg-teal-900 transition-colors"
+          className="inline-block bg-primary text-primary-foreground px-8 py-3 text-base font-medium hover:bg-primary/90 transition-colors rounded-md"
         >
           {ctaButtonText}
         </a>
