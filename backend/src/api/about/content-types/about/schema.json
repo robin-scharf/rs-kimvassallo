@@ -13,7 +13,12 @@
   "pluginOptions": {},
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": true
+    },
+    "subtitle": {
+      "type": "string",
+      "required": false
     },
     "profilePhoto": {
       "type": "media",
@@ -23,9 +28,9 @@
         "images"
       ]
     },
-    "blocks": {
-      "type": "dynamiczone",
-      "components": ["shared.media", "shared.quote", "shared.rich-text", "shared.slider"]
+    "content": {
+      "type": "richtext",
+      "required": false
     }
   }
 }

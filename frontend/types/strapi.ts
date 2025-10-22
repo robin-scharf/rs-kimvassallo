@@ -1,14 +1,32 @@
-export interface Home {
+export interface StrapiImage {
+  id: number
+  url: string
+  alternativeText?: string
+  width?: number
+  height?: number
+  formats?: {
+    thumbnail?: { url: string }
+    small?: { url: string }
+    medium?: { url: string }
+    large?: { url: string }
+  }
+}
+
+export interface Header {
   id: number
   documentId: string
   name: string
-  credentials: string
+  credentials?: string
   tagline: string
-  description: string
-  heroImage?: {
-    url: string
-    alternativeText: string
-  }
+  location?: string
+}
+
+export interface MenuItem {
+  id: number
+  documentId: string
+  label: string
+  anchor: string
+  order: number
 }
 
 export interface Hero {
@@ -16,54 +34,38 @@ export interface Hero {
   documentId: string
   title: string
   subtitle?: string
-  backgroundImage?: {
-    url: string
-    alternativeText: string
-  }
+  backgroundImage?: StrapiImage
   backgroundColor?: string
   ctaButtonText?: string
-  ctaButtonLink?: string
+  ctaButtonAnchor?: string
 }
 
 export interface About {
   id: number
   documentId: string
   title: string
-  profilePhoto?: {
-    url: string
-    alternativeText: string
-  }
-  blocks: Block[]
+  subtitle?: string
+  profilePhoto?: StrapiImage
+  content?: string
 }
 
-export interface Approach {
+export interface ServiceColumn {
   id: number
-  documentId: string
+  image?: StrapiImage
   title: string
-  content: string
-}
-
-export interface Service {
-  id: number
-  documentId: string
-  title: string
-  description: string
-  image?: {
-    url: string
-    alternativeText: string
-  }
+  subtitle?: string
+  description?: string
   buttonText?: string
-  slug: string
-  order: number
+  buttonLink?: string
 }
 
-export interface InfoItem {
+export interface Services {
   id: number
   documentId: string
-  title: string
-  description: string
-  buttonText?: string
-  order: number
+  title?: string
+  subtitle?: string
+  columns?: ServiceColumn[]
+  offersOnlineAppointments: boolean
 }
 
 export interface Contact {
@@ -81,12 +83,6 @@ export interface Global {
   documentId: string
   siteName: string
   siteDescription: string
-  location: string
-  offersOnlineAppointments: boolean
-  footerText?: string
-  footerDisclaimer?: string
-  noSurprisesActLink?: string
-  therapyFee?: string
   defaultSeo?: {
     metaTitle: string
     metaDescription: string
@@ -96,22 +92,9 @@ export interface Global {
 export interface Footer {
   id: number
   documentId: string
-  legalText?: string
-  links?: FooterLink[]
-}
-
-export interface FooterLink {
-  id: number
-  label: string
-  url: string
-  openInNewTab: boolean
-}
-
-export interface ApproachItem {
-  id: number
-  documentId: string
-  name: string
-  order: number
+  copyrightText?: string
+  privacyLink?: string
+  termsLink?: string
 }
 
 export interface Terms {
@@ -128,15 +111,4 @@ export interface Privacy {
   title: string
   content: string
   lastUpdated?: string
-}
-
-export interface Block {
-  id: number
-  __component: string
-  body?: string
-  file?: {
-    url: string
-    alternativeText: string
-  }
-  title?: string
 }

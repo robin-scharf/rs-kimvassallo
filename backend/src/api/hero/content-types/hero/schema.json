@@ -38,7 +38,7 @@
       "required": false,
       "default": "Contact"
     },
-    "ctaButtonLink": {
+    "ctaButtonAnchor": {
       "type": "string",
       "required": false,
       "default": "#contact"

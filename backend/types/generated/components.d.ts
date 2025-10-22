@@ -13,6 +13,22 @@ export interface FooterLink extends Struct.ComponentSchema {
   };
 }
 
+export interface ServicesColumn extends Struct.ComponentSchema {
+  collectionName: 'components_services_columns';
+  info: {
+    description: 'A service column with image, title, subtitle, description and button';
+    displayName: 'Service Column';
+  };
+  attributes: {
+    buttonLink: Schema.Attribute.String;
+    buttonText: Schema.Attribute.String;
+    description: Schema.Attribute.RichText;
+    image: Schema.Attribute.Media<'images'>;
+    subtitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -79,6 +95,7 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'footer.link': FooterLink;
+      'services.column': ServicesColumn;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

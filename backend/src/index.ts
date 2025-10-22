@@ -59,14 +59,14 @@ export default {
       const contentTypes = [
         'api::about.about',
         'api::contact.contact',
+        'api::footer.footer',
         'api::global.global',
-        'api::home.home',
+        'api::header.header',
+        'api::hero.hero',
+        'api::menu-item.menu-item',
         'api::privacy-policy.privacy-policy',
         'api::service.service',
         'api::terms-of-service.terms-of-service',
-        'api::article.article',
-        'api::author.author',
-        'api::category.category',
       ]
 
       const permissions = await strapi
@@ -91,18 +91,23 @@ export default {
               where: { id: existingPermission.id },
               data: { enabled: true },
             })
+            console.log(`✅ Enabled ${action} permission for ${contentType}`)
           }
         }
       }
+      console.log('✅ Public role permissions configured')
     }
 
     // Set up revalidation webhooks for content changes
     const contentTypesToWatch = [
-      'api::home.home',
       'api::about.about',
-      'api::service.service',
       'api::contact.contact',
+      'api::footer.footer',
       'api::global.global',
+      'api::header.header',
+      'api::hero.hero',
+      'api::menu-item.menu-item',
+      'api::service.service',
       'api::privacy-policy.privacy-policy',
       'api::terms-of-service.terms-of-service',
     ]

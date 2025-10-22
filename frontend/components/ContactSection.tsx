@@ -1,15 +1,13 @@
 'use client';
 
-import { Contact, Global } from '@/types/strapi';
+import { Contact } from '@/types/strapi';
 import { useState, FormEvent } from 'react';
-import Link from 'next/link';
 
 interface ContactSectionProps {
   data: Contact | null;
-  global: Global | null;
 }
 
-export default function ContactSection({ data, global }: ContactSectionProps) {
+export default function ContactSection({ data }: ContactSectionProps) {
   const [formState, setFormState] = useState({
     name: '',
     email: '',
@@ -184,59 +182,6 @@ export default function ContactSection({ data, global }: ContactSectionProps) {
           </div>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="bg-[#4a5a5f] text-white mt-20 py-12">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-8">
-            {/* Left Column - Contact Info */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4" style={{ fontFamily: 'var(--font-lora), Lora, serif' }}>
-                {data.title || 'Contact'}
-              </h3>
-              <p className="text-sm mb-4">{global?.location || 'Location'}</p>
-
-              <div className="space-y-2 text-sm">
-                {global?.noSurprisesActLink && (
-                  <a href={global.noSurprisesActLink} target="_blank" rel="noopener noreferrer" className="block hover:text-teal-300 transition-colors border-b border-white pb-1 mb-3 inline-block">
-                    No Surprises Act
-                  </a>
-                )}
-                {global?.footerText && (
-                  <p className="text-sm leading-relaxed">
-                    {global.footerText}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            {/* Right Column - Location */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Main Location</h3>
-              <p className="text-sm">{data.address}</p>
-            </div>
-          </div>
-
-          {/* Bottom Section */}
-          <div className="border-t border-gray-600 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400">
-              <div className="flex items-center gap-2">
-                <span>© {new Date().getFullYear()} {global?.siteName || 'Kim Vassallo, LCSW-R'}</span>
-              </div>
-              <div className="flex gap-4">
-                <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-                <span>·</span>
-                <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
-              </div>
-            </div>
-            {global?.footerDisclaimer && (
-              <p className="text-xs text-gray-400 text-center mt-6">
-                {global.footerDisclaimer}
-              </p>
-            )}
-          </div>
-        </div>
-      </footer>
     </section>
   );
 }

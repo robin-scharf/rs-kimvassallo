@@ -5,21 +5,26 @@
     "singularName": "footer",
     "pluralName": "footers",
     "displayName": "Footer",
-    "description": "Site footer with legal text and links"
+    "description": "Site footer with copyright and legal links"
   },
   "options": {
     "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
-    "legalText": {
-      "type": "text",
+    "copyrightText": {
+      "type": "richtext",
       "required": false
     },
-    "links": {
-      "type": "component",
-      "repeatable": true,
-      "component": "footer.link"
+    "privacyLink": {
+      "type": "string",
+      "required": false,
+      "default": "/privacy-policy"
+    },
+    "termsLink": {
+      "type": "string",
+      "required": false,
+      "default": "/terms-of-service"
     }
   }
 }

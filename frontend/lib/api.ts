@@ -1,3 +1,9 @@
+export async function getService(slug: string) {
+  const data = await fetchAPI(
+    `/service?filters[slug][$eq]=${slug}&populate=image`
+  )
+  return data?.data?.[0] || null
+}
 const API_URL =
   process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337/api'
 
@@ -38,9 +44,14 @@ export async function fetchAPI(endpoint: string, options = {}) {
   }
 }
 
-export async function getHome() {
-  const data = await fetchAPI('/home?populate=heroImage')
+export async function getHeader() {
+  const data = await fetchAPI('/header')
   return data?.data || null
+}
+
+export async function getMenuItems() {
+  const data = await fetchAPI('/menu-items?sort=order:asc')
+  return data?.data || []
 }
 
 export async function getHero() {
@@ -49,30 +60,13 @@ export async function getHero() {
 }
 
 export async function getAbout() {
-  const data = await fetchAPI('/about?populate=profilePhoto&populate=blocks')
-  return data?.data || null
-}
-
-export async function getApproach() {
-  const data = await fetchAPI('/approach')
+  const data = await fetchAPI('/about?populate=*')
   return data?.data || null
 }
 
 export async function getServices() {
-  const data = await fetchAPI('/services?populate=image&sort=order:asc')
-  return data?.data || []
-}
-
-export async function getService(slug: string) {
-  const data = await fetchAPI(
-    `/services?filters[slug][$eq]=${slug}&populate=image`
-  )
-  return data?.data?.[0] || null
-}
-
-export async function getInfoItems() {
-  const data = await fetchAPI('/info-items?sort=order:asc')
-  return data?.data || []
+  const data = await fetchAPI('/service?populate[columns][populate]=image')
+  return data?.data || null
 }
 
 export async function getContact() {
@@ -86,13 +80,8 @@ export async function getGlobal() {
 }
 
 export async function getFooter() {
-  const data = await fetchAPI('/footer?populate=links')
+  const data = await fetchAPI('/footer')
   return data?.data || null
-}
-
-export async function getApproachItems() {
-  const data = await fetchAPI('/approach-items?sort=order:asc')
-  return data?.data || []
 }
 
 export async function getTerms() {

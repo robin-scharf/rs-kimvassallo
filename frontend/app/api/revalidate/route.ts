@@ -25,21 +25,21 @@ export async function POST(request: NextRequest) {
 
       // Revalidate specific pages based on model
       switch (model) {
-        case 'home':
-        case 'global':
+        case 'header':
+        case 'menu-item':
+        case 'hero':
         case 'about':
-        case 'approach':
-        case 'approach-item':
         case 'service':
         case 'contact':
-        case 'insurance-provider':
+        case 'footer':
+        case 'global':
           revalidatePath('/')
           break
         case 'privacy-policy':
-          revalidatePath('/privacy-policy')
+          revalidatePath('/privacy')
           break
         case 'terms-of-service':
-          revalidatePath('/terms-of-service')
+          revalidatePath('/terms')
           break
         default:
           // Revalidate all pages if model is unknown

@@ -30,31 +30,6 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.seo"
-    },
-    "location": {
-      "type": "string",
-      "required": false
-    },
-    "offersOnlineAppointments": {
-      "type": "boolean",
-      "default": false
-    },
-    "acceptsInsurance": {
-      "type": "boolean",
-      "default": false
-    },
-    "footerText": {
-      "type": "richtext"
-    },
-    "footerDisclaimer": {
-      "type": "text"
-    },
-    "noSurprisesActLink": {
-      "type": "string"
-    },
-    "therapyFee": {
-      "type": "string",
-      "default": "Individual therapy (50-55 min): $150"
     }
   }
 }
