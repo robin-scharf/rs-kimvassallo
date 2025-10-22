@@ -14,7 +14,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
 
   if (!data) {
     return (
-      <section id="services" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-[#2d5252] text-black dark:text-white">
+      <section id="services" className="py-20 px-4 sm:px-6 lg:px-8 bg-primary text-white">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-sm font-normal mb-12 uppercase tracking-widest text-center text-gray-300">
             Services
@@ -30,20 +30,20 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
   return (
     <motion.section
       id="services"
-      className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-[#2d5252] text-black dark:text-white"
+      className="py-20 px-4 sm:px-6 lg:px-8 bg-primary text-white"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-12 uppercase tracking-wide text-center">
+        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-12 uppercase tracking-wide text-center">
           {data.title || 'Services'}
         </h2>
 
         {/* Subtitle */}
         {data.subtitle && (
-          <p className="text-lg text-center text-muted-foreground mb-8">
+          <p className="text-lg text-center text-muted mb-8">
             {data.subtitle}
           </p>
         )}
@@ -63,7 +63,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                       initial={{ borderRadius: 20, boxShadow: '0 2px 16px rgba(0,0,0,0.12)', scale: 0.97, opacity: 0 }}
                       animate={{ borderRadius: 20, boxShadow: '0 2px 16px rgba(0,0,0,0.12)', scale: 1, opacity: 1 }}
                       transition={{ type: 'spring', stiffness: 200, damping: 30 }}
-                      className={`bg-gray-100 dark:bg-[#1c1c1e] overflow-hidden cursor-pointer rounded-md`}
+                      className={`bg-white overflow-hidden cursor-pointer rounded-md`}
                       onClick={() => setOpenCard(String(column.id))}
                     >
                       <div className="relative w-full h-48 mb-6">
@@ -87,14 +87,20 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                           </motion.div>
                         )}
                       </div>
-                      <div className="px-6 pb-6">
-                        <h3 className="text-xl font-semibold text-black dark:text-white mb-2">
-                          {column.title}
+                      <div className="px-6 pb-6 bg-white">
+                        <h3 className="text-xl font-semibold text-black mb-2">
+                          <span className="text-black">{column.title}</span>
                         </h3>
                         {column.subtitle && (
-                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                          <p className="text-sm text-black mb-4">
                             {column.subtitle}
                           </p>
+                        )}
+                        {column.description && (
+                          <div
+                            className="text-sm text-black mb-4 prose prose-sm"
+                            dangerouslySetInnerHTML={{ __html: column.description }}
+                          />
                         )}
                       </div>
                     </motion.div>
@@ -115,7 +121,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                 >
                   <motion.div
                     layout
-                    className="bg-gray-100 dark:bg-[#1c1c1e] rounded-md shadow-2xl overflow-hidden max-w-lg w-full relative"
+                    className="bg-black rounded-md shadow-2xl overflow-hidden max-w-lg w-full relative"
                     initial={{ scale: 0.95, y: 40 }}
                     animate={{ scale: 1, y: 0 }}
                     exit={{ scale: 0.95, y: 40 }}
@@ -150,7 +156,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                           </div>
                           <div className="px-6 pb-6">
                             <h3 className="text-xl font-semibold text-black dark:text-white mb-2">
-                              {column.title}
+                              <span className="text-black">{column.title}</span>
                             </h3>
                             {column.subtitle && (
                               <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
@@ -159,7 +165,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                             )}
                             {column.description && (
                               <div
-                                className="text-sm text-gray-700 dark:text-gray-300 mb-4 prose prose-sm dark:prose-invert"
+                                className="text-sm text-black mb-4 prose prose-sm"
                                 dangerouslySetInnerHTML={{ __html: column.description }}
                               />
                             )}

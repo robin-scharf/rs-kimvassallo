@@ -1,6 +1,6 @@
 import { getHeader, getMenuItems, getHero, getAbout, getServices, getContact, getGlobal, getFooter } from '@/lib/api';
 import HeroSection from '@/components/HeroSection';
-import { ModeToggle } from '@/components/ModeToggle';
+// import { ModeToggle } from '@/components/ModeToggle';
 import HeaderSection from '@/components/HeaderSection';
 import AboutSection from '@/components/AboutSection';
 import ServicesSection from '@/components/ServicesSection';
@@ -26,10 +26,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen relative">
-      {/* Top right theme toggle */}
-      <div className="fixed top-6 right-6 z-50">
-        <ModeToggle />
-      </div>
+      {/* Top right theme toggle removed for static light mode */}
       <HeaderSection header={header} menuItems={menuItems || []} />
       <HeroSection hero={hero} />
       <AboutSection data={about} />
