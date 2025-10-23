@@ -1,4 +1,10 @@
-import { getService, getGlobal } from '@/lib/api';
+// Define MenuItem type for menuItems
+interface MenuItem {
+  id: string | number;
+  title: string;
+  link?: string;
+}
+import { getService, getHeader, getMenuItems, getFooter } from '@/lib/api';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -14,9 +20,11 @@ interface ServicePageProps {
 
 export default async function ServicePage({ params }: ServicePageProps) {
   const { slug } = await params;
-  const [service, global] = await Promise.all([
+  const [service, header, menuItems, footer] = await Promise.all([
     getService(slug),
-    getGlobal(),
+    getHeader(),
+    getMenuItems(),
+    getFooter(),
   ]);
 
   if (!service) {
@@ -26,15 +34,33 @@ export default async function ServicePage({ params }: ServicePageProps) {
   const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL?.replace('/api', '') || 'http://localhost:1337';
 
   return (
-    <main className="min-h-screen">
-      {/* Header */}
-      <header className="bg-[#f5f1ed] border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <Link href="/" className="text-teal-700 hover:text-teal-800 font-medium">
-            ← Back to Home
-          </Link>
-        </div>
-      </header>
+    <main className="min-h-screen relative">
+      {/* Header Section (same as main page) */}
+      {header && (
+        <header className="bg-background border-b border-border">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex items-center justify-between">
+            <Link href="/" className="text-primary hover:text-primary-foreground font-medium text-lg">
+              ← Back to Home
+            </Link>
+            <div>
+              <span className="font-bold text-xl" style={{ fontFamily: 'var(--font-lora), Lora, serif' }}>{header.title}</span>
+            </div>
+            {menuItems && menuItems.length > 0 && (
+              <nav className="flex gap-6">
+                {menuItems.map((item: MenuItem) => (
+                  <Link
+                    key={item.id}
+                    href={item.link || '#'}
+                    className="text-primary hover:text-primary-foreground font-medium text-base"
+                  >
+                    {item.title}
+                  </Link>
+                ))}
+              </nav>
+            )}
+          </div>
+        </header>
+      )}
 
       {/* Service Content */}
       <article className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
@@ -72,6 +98,38 @@ export default async function ServicePage({ params }: ServicePageProps) {
           </div>
         </div>
       </article>
+
+      {/* Footer Section (same as main page) */}
+      {footer && (
+        <footer className="bg-background dark:bg-background border-t border-border py-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            {footer.copyrightText && (
+              <div
+                className="text-sm text-gray-600 mb-4 prose prose-sm mx-auto"
+                dangerouslySetInnerHTML={{ __html: footer.copyrightText }}
+              />
+            )}
+            <div className="flex justify-center items-center gap-6 flex-wrap">
+              {footer.privacyLink && (
+                <a
+                  href={footer.privacyLink}
+                  className="text-primary hover:text-primary-foreground font-medium text-sm"
+                >
+                  Privacy Policy
+                </a>
+              )}
+              {footer.termsLink && (
+                <a
+                  href={footer.termsLink}
+                  className="text-primary hover:text-primary-foreground font-medium text-sm"
+                >
+                  Terms of Service
+                </a>
+              )}
+            </div>
+          </div>
+        </footer>
+      )}
     </main>
   );
 }

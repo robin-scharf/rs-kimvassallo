@@ -515,10 +515,10 @@ export interface ApiFooterFooter extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     privacyLink: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'/privacy-policy'>;
+      Schema.Attribute.DefaultTo<'/privacy'>;
     publishedAt: Schema.Attribute.DateTime;
     termsLink: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'/terms-of-service'>;
+      Schema.Attribute.DefaultTo<'/terms'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -673,7 +673,7 @@ export interface ApiPrivacyPolicyPrivacyPolicy extends Struct.SingleTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::privacy-policy.privacy-policy'
+      'api::privacy.privacy-policy'
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
@@ -739,7 +739,7 @@ export interface ApiTermsOfServiceTermsOfService
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::terms-of-service.terms-of-service'
+      'api::terms.terms-of-service'
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
@@ -1269,9 +1269,9 @@ declare module '@strapi/strapi' {
       'api::header.header': ApiHeaderHeader;
       'api::hero.hero': ApiHeroHero;
       'api::menu-item.menu-item': ApiMenuItemMenuItem;
-      'api::privacy-policy.privacy-policy': ApiPrivacyPolicyPrivacyPolicy;
+      'api::privacy.privacy-policy': ApiPrivacyPolicyPrivacyPolicy;
       'api::service.service': ApiServiceService;
-      'api::terms-of-service.terms-of-service': ApiTermsOfServiceTermsOfService;
+      'api::terms.terms-of-service': ApiTermsOfServiceTermsOfService;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

@@ -35,10 +35,10 @@ export async function POST(request: NextRequest) {
         case 'global':
           revalidatePath('/')
           break
-        case 'privacy-policy':
+        case 'privacy':
           revalidatePath('/privacy')
           break
-        case 'terms-of-service':
+        case 'terms':
           revalidatePath('/terms')
           break
         default:

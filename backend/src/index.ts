@@ -64,9 +64,9 @@ export default {
         'api::header.header',
         'api::hero.hero',
         'api::menu-item.menu-item',
-        'api::privacy-policy.privacy-policy',
+        'api::privacy.privacy-policy',
         'api::service.service',
-        'api::terms-of-service.terms-of-service',
+        'api::terms.terms-of-service',
       ]
 
       const permissions = await strapi
@@ -108,8 +108,8 @@ export default {
       'api::hero.hero',
       'api::menu-item.menu-item',
       'api::service.service',
-      'api::privacy-policy.privacy-policy',
-      'api::terms-of-service.terms-of-service',
+      'api::privacy.privacy-policy',
+      'api::terms.terms',
     ]
 
     // Subscribe to lifecycle events for each content type

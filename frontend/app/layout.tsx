@@ -21,10 +21,24 @@ export async function generateMetadata(): Promise<Metadata> {
   // Fallback values if API fails
   const fallbackTitle = "Kim Vassallo, LCSW-R - Therapy for Women";
   const fallbackDescription = "Licensed Clinical Social Worker specializing in women's health, perinatal mental health, and grief and loss support.";
+  const fallbackFavicon = "/favicon.ico";
+
+  // Strapi favicon may be a file object or string; handle both
+  let faviconUrl = fallbackFavicon;
+  if (global?.favicon) {
+    if (typeof global.favicon === "string") {
+      faviconUrl = global.favicon;
+    } else if (global.favicon.url) {
+      faviconUrl = global.favicon.url;
+    }
+  }
 
   return {
     title: global?.defaultSeo?.metaTitle || global?.siteName || fallbackTitle,
     description: global?.defaultSeo?.metaDescription || global?.siteDescription || fallbackDescription,
+    icons: {
+      icon: faviconUrl,
+    },
   };
 }
 

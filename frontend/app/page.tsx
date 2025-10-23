@@ -1,4 +1,4 @@
-import { getHeader, getMenuItems, getHero, getAbout, getServices, getContact, getGlobal, getFooter } from '@/lib/api';
+import { getHeader, getMenuItems, getHero, getAbout, getServices, getContact, getFooter } from '@/lib/api';
 import HeroSection from '@/components/HeroSection';
 // import { ModeToggle } from '@/components/ModeToggle';
 import HeaderSection from '@/components/HeaderSection';
@@ -13,14 +13,13 @@ export const revalidate = 1;
 
 export default async function Home() {
   // Fetch all data with fallbacks to prevent build failures
-  const [header, menuItems, hero, about, services, contact, global, footer] = await Promise.allSettled([
+  const [header, menuItems, hero, about, services, contact, footer] = await Promise.allSettled([
     getHeader(),
     getMenuItems(),
     getHero(),
     getAbout(),
     getServices(),
     getContact(),
-    getGlobal(),
     getFooter(),
   ]).then(results => results.map(result => result.status === 'fulfilled' ? result.value : null));
 

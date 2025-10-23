@@ -19,12 +19,12 @@
     "privacyLink": {
       "type": "string",
       "required": false,
-      "default": "/privacy-policy"
+      "default": "/privacy"
     },
     "termsLink": {
       "type": "string",
       "required": false,
-      "default": "/terms-of-service"
+      "default": "/terms"
     }
   }
 }

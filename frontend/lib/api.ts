@@ -85,11 +85,11 @@ export async function getFooter() {
 }
 
 export async function getTerms() {
-  const data = await fetchAPI('/terms-of-service')
+  const data = await fetchAPI('/terms')
   return data?.data || null
 }
 
 export async function getPrivacy() {
-  const data = await fetchAPI('/privacy-policy')
+  const data = await fetchAPI('/privacy')
   return data?.data || null
 }

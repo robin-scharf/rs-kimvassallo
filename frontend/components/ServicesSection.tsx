@@ -52,7 +52,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
         {data.columns && data.columns.length > 0 ? (
           <>
             <ul className="flex flex-wrap gap-8 justify-center">
-              {data.columns.map((column, _index) => {
+              {data.columns.map((column) => {
                 // column type: ServiceColumn
                 const isOpen = openCard === String(column.id);
                 if (isOpen) return null; // Hide cards when overlay is open

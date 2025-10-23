@@ -46,8 +46,8 @@
 
 ### 1.6 Update Privacy Policy & Terms of Service - ✅ DONE
 
-- ✅ `privacy-policy` singleType already has richtext content field
-- ✅ `terms-of-service` singleType already has richtext content field
+- ✅ `privacy` singleType already has richtext content field
+- ✅ `terms` singleType already has richtext content field
 
 ## Phase 2: Frontend Changes - ✅ COMPLETED
 
@@ -114,7 +114,7 @@
 
 - ✅ Already fetch content from Strapi
 - ✅ Use RichText component for proper markdown rendering
-- ✅ Routes work: `/privacy-policy` and `/terms-of-service`
+- ✅ Routes work: `/privacy` and `/terms`
 
 ## Phase 3: Testing & Verification - 🟡 READY FOR TESTING
 
