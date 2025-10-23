@@ -11,11 +11,24 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ hero }: HeroSectionProps) {
-  const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL?.replace('/api', '') || 'http://localhost:1337';
+  // Use direct media URL from Strapi, prepending origin only if needed
 
-  const backgroundImageUrl = hero?.backgroundImage?.url
-    ? `${strapiUrl}${hero.backgroundImage.url}`
-    : null;
+  let backgroundImageUrl: string | null = null;
+  if (hero?.backgroundImage?.url) {
+    // If the URL is absolute (starts with http/https), use as-is
+    if (/^https?:\/\//.test(hero.backgroundImage.url)) {
+      backgroundImageUrl = hero.backgroundImage.url;
+    } else if (hero.backgroundImage.url.startsWith('/')) {
+      // Only prepend Strapi origin if relative path
+      const strapiOrigin = process.env.NEXT_PUBLIC_STRAPI_API_URL?.replace(/\/api$/, '') || 'http://localhost:1337';
+      backgroundImageUrl = `${strapiOrigin}${hero.backgroundImage.url}`;
+    } else {
+      // Unexpected format, use as-is
+      backgroundImageUrl = hero.backgroundImage.url;
+    }
+  }
+  console.log('Image URL from Strapi:', hero?.backgroundImage?.url);
+  console.log('Final backgroundImageUrl:', backgroundImageUrl);
 
   const backgroundColor = hero?.backgroundColor || '#b08080';
   const title = hero?.title || 'Professional Therapy Services';

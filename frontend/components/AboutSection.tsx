@@ -37,7 +37,11 @@ export default function AboutSection({ data }: AboutSectionProps) {
           <div className="flex justify-center mb-12">
             <div className="relative w-48 h-48 rounded-full overflow-hidden shadow-lg">
               <Image
-                src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL?.replace('/api', '')}${data.profilePhoto.url}`}
+                src={
+                  data.profilePhoto.url.startsWith('/')
+                    ? `${process.env.NEXT_PUBLIC_STRAPI_API_URL?.replace('/api', '')}${data.profilePhoto.url}`
+                    : data.profilePhoto.url
+                }
                 alt={data.profilePhoto.alternativeText || 'Profile photo'}
                 fill
                 className="object-cover"

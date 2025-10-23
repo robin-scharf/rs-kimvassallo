@@ -79,7 +79,11 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                             transition={{ type: 'spring', stiffness: 300, damping: 35 }}
                           >
                             <Image
-                              src={`${strapiUrl}${column.image.url}`}
+                              src={
+                                column.image.url.startsWith('/')
+                                  ? `${strapiUrl}${column.image.url}`
+                                  : column.image.url
+                              }
                               alt={column.image.alternativeText || column.title}
                               fill
                               className="object-cover rounded-t"
@@ -146,7 +150,11 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                                 transition={{ type: 'spring', stiffness: 300, damping: 35 }}
                               >
                                 <Image
-                                  src={`${strapiUrl}${column.image.url}`}
+                                  src={
+                                    column.image.url.startsWith('/')
+                                      ? `${strapiUrl}${column.image.url}`
+                                      : column.image.url
+                                  }
                                   alt={column.image.alternativeText || column.title}
                                   fill
                                   className="object-cover rounded-t"
