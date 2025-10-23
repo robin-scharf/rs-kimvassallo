@@ -15,6 +15,7 @@
 /build
 .open-next/
 .wrangler/
+frontend/.wrangler/
 
 # testing
 /coverage
