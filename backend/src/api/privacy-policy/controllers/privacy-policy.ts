@@ -1,5 +1,5 @@
 import { factories } from '@strapi/strapi'
 
 export default factories.createCoreController(
-  'api::privacy.privacy-policy'
+  'api::privacy-policy.privacy-policy'
 )

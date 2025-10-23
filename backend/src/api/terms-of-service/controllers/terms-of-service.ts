@@ -1,5 +1,5 @@
 import { factories } from '@strapi/strapi'
 
 export default factories.createCoreController(
-  'api::terms.terms-of-service'
+  'api::terms-of-service.terms-of-service'
 )
