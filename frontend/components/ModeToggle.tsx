@@ -4,9 +4,13 @@ import * as React from "react"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 
-export function ModeToggle() {
-  const { setTheme, theme } = useTheme()
+// Should match the value in ThemeProvider
 
+const fixed_theme = true;
+
+export function ModeToggle() {
+  const { setTheme, theme } = useTheme();
+  if (fixed_theme) return null;
   return (
     <div className="relative">
       <button
@@ -21,14 +25,6 @@ export function ModeToggle() {
           <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:-rotate-90" />
         )}
       </button>
-      {/* Optionally add dropdown for explicit theme selection */}
-      {/*
-        <div className="absolute right-0 mt-2 w-32 bg-background text-foreground rounded shadow-lg">
-          <button onClick={() => setTheme("light")}>Light</button>
-          <button onClick={() => setTheme("dark")}>Dark</button>
-          <button onClick={() => setTheme("system")}>System</button>
-        </div>
-        */}
     </div>
-  )
+  );
 }

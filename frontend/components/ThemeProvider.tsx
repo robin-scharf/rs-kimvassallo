@@ -3,9 +3,18 @@
 import * as React from 'react'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
 
-export function ThemeProvider({
-  children,
-  ...props
-}: React.ComponentProps<typeof NextThemesProvider>) {
-  return <NextThemesProvider {...props}>{children}</NextThemesProvider>
+interface ThemeProviderProps extends React.ComponentProps<typeof NextThemesProvider> {
+  children: React.ReactNode;
+  fixedTheme?: boolean;
+}
+
+export function ThemeProvider({ children, fixedTheme = true, ...props }: ThemeProviderProps) {
+  if (fixedTheme) {
+    return <div className="light">{children}</div>;
+  }
+  return (
+    <NextThemesProvider {...props}>
+      {children}
+    </NextThemesProvider>
+  );
 }
