@@ -5,6 +5,7 @@ interface MenuItem {
   link?: string;
 }
 import { getService, getHeader, getMenuItems, getFooter } from '@/lib/api';
+import RichText from '@/components/RichText';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -104,10 +105,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
         <footer className="bg-background dark:bg-background border-t border-border py-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             {footer.copyrightText && (
-              <div
-                className="text-sm text-gray-600 mb-4 prose prose-sm mx-auto"
-                dangerouslySetInnerHTML={{ __html: footer.copyrightText }}
-              />
+              <RichText content={footer.copyrightText} />
             )}
             <div className="flex justify-center items-center gap-6 flex-wrap">
               {footer.privacyLink && (

@@ -31,6 +31,9 @@ frontend/out/
 /build
 frontend/build
 
+# assets
+backend/public/
+
 # misc
 .DS_Store
 *.pem

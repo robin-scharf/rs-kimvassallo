@@ -1,3 +1,5 @@
+'use client';
+
 import { About } from '@/types/strapi';
 import RichText from './RichText';
 import Image from 'next/image';

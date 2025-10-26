@@ -14,7 +14,7 @@ preview_bucket_name = "rs-kimvassallo-cache-preview"
 
 [vars]
 NODE_ENV = "production"
-NEXT_PUBLIC_STRAPI_API_URL = "https://respected-happiness-2f4bbbe5dd.strapiapp.com/api"
+NEXT_PUBLIC_STRAPI_API_URL = "https://automatic-benefit-ed0076f55e.strapiapp.com/api"
 R2_ACCESS_KEY_ID = "ae3cb1922c0eeb2861c3c097d3cc13d5"
 R2_SECRET_ACCESS_KEY = "229e50f4d6b8461857e15e34b74600b771eef3a2cbff55c37f3ece342181abee"
-CLOUDFLARE_ACCOUNT_ID = "ee2123513c489bd0f4c6fc73d6cce2c5"
+CF_ACCOUNT_ID = "ee2123513c489bd0f4c6fc73d6cce2c5"

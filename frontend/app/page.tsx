@@ -1,3 +1,4 @@
+import RichText from '@/components/RichText';
 import { getHeader, getMenuItems, getHero, getAbout, getServices, getContact, getFooter } from '@/lib/api';
 import HeroSection from '@/components/HeroSection';
 // import { ModeToggle } from '@/components/ModeToggle';
@@ -35,10 +36,7 @@ export default async function Home() {
         <footer className="bg-background dark:bg-background border-t border-border py-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             {footer.copyrightText && (
-              <div
-                className="text-sm text-gray-600 mb-4 prose prose-sm mx-auto"
-                dangerouslySetInnerHTML={{ __html: footer.copyrightText }}
-              />
+              <RichText content={footer.copyrightText} />
             )}
             <div className="flex justify-center items-center gap-6 flex-wrap">
               {footer.privacyLink && (

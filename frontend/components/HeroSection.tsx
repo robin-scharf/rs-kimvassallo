@@ -1,10 +1,10 @@
-
 "use client";
 
 "use client";
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Hero } from '@/types/strapi';
+import React, { useRef } from 'react';
 
 interface HeroSectionProps {
   hero: Hero | null;
@@ -36,20 +36,31 @@ export default function HeroSection({ hero }: HeroSectionProps) {
   const ctaButtonText = hero?.ctaButtonText || 'Contact';
   const ctaButtonAnchor = hero?.ctaButtonAnchor || '#contact';
 
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, 60]); // Move downward on scroll
+
   return (
     <section
       id="hero"
+      ref={sectionRef}
       className="relative min-h-[400px] flex items-center justify-center overflow-hidden"
       style={{ backgroundColor }}
     >
       {backgroundImageUrl && (
-        <Image
-          src={backgroundImageUrl}
-          alt={hero?.backgroundImage?.alternativeText || title}
-          fill
-          priority
-          className="object-cover z-0"
-        />
+        <motion.div
+          className="absolute inset-0 z-0"
+          style={{ scale, y, willChange: 'transform' }}
+        >
+          <Image
+            src={backgroundImageUrl}
+            alt={hero?.backgroundImage?.alternativeText || title}
+            fill
+            priority
+            className="object-cover"
+          />
+        </motion.div>
       )}
       {/* Gradient overlay */}
       <div className="absolute inset-0 z-10" style={{

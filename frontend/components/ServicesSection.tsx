@@ -1,8 +1,10 @@
 "use client";
+
 import { Services } from '@/types/strapi';
 import Image from 'next/image';
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 
 interface ServicesSectionProps {
   data: Services | null;
@@ -11,6 +13,14 @@ interface ServicesSectionProps {
 export default function ServicesSection({ data }: ServicesSectionProps) {
   const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL?.replace('/api', '') || 'http://localhost:1337';
   const [openCard, setOpenCard] = React.useState<string | null>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  // Framer Motion scroll progress: 0 = fully visible, 1 = fully out of view
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['end end', 'start end'],
+  });
+  // Blur starts when only 20% remains visible
+  const blur = useTransform(scrollYProgress, [0.8, 1], [0, 20]);
 
   if (!data) {
     return (
@@ -30,11 +40,13 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
   return (
     <motion.section
       id="services"
+      ref={sectionRef}
       className="py-20 px-4 sm:px-6 lg:px-8 bg-primary text-white"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
+      style={{ filter: blur, transform: 'translateZ(0)' }}
     >
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-12 uppercase tracking-wide text-center">
@@ -60,7 +72,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                   <li key={column.id} className="relative flex-1 min-w-[320px] max-w-[420px]">
                     <motion.div
                       layout
-                      initial={{ borderRadius: 20, boxShadow: '0 2px 16px rgba(0,0,0,0.12)', scale: 0.97, opacity: 0 }}
+                      initial={{ borderRadius: 20, boxShadow: '0 2px 16px rgba(0,0,0,0.12)', scale: 0.97, opacity: 1 }}
                       animate={{ borderRadius: 20, boxShadow: '0 2px 16px rgba(0,0,0,0.12)', scale: 1, opacity: 1 }}
                       transition={{ type: 'spring', stiffness: 200, damping: 30 }}
                       className={`bg-white overflow-hidden cursor-pointer rounded-md`}
@@ -125,11 +137,12 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                 >
                   <motion.div
                     layout
-                    className="bg-black rounded-md shadow-2xl overflow-hidden max-w-lg w-full relative"
-                    initial={{ scale: 0.95, y: 40 }}
-                    animate={{ scale: 1, y: 0 }}
+                    className="bg-white rounded-md shadow-lg overflow-hidden max-w-lg w-full relative focus:outline-none focus:ring-4 focus:ring-teal-400"
+                    initial={{ borderRadius: 20, boxShadow: '0 2px 16px rgba(0,0,0,0.12)', scale: 0.97, opacity: 1 }}
+                    animate={{ borderRadius: 20, boxShadow: '0 2px 16px rgba(0,0,0,0.12)', scale: 1, opacity: 1 }}
                     exit={{ scale: 0.95, y: 40 }}
                     transition={{ type: 'spring', stiffness: 200, damping: 30 }}
+                    tabIndex={-1}
                     onClick={e => e.stopPropagation()}
                   >
                     {(() => {
@@ -143,9 +156,9 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                                 className="w-full h-full"
                                 initial={false}
                                 animate={{
-                                  x: -20,
-                                  y: -20,
-                                  boxShadow: '0 8px 32px rgba(0,0,0,0.24)'
+                                  x: 0,
+                                  y: 0,
+                                  boxShadow: '0 2px 16px rgba(0,0,0,0.12)'
                                 }}
                                 transition={{ type: 'spring', stiffness: 300, damping: 35 }}
                               >
@@ -162,12 +175,12 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                               </motion.div>
                             )}
                           </div>
-                          <div className="px-6 pb-6">
-                            <h3 className="text-xl font-semibold text-black dark:text-white mb-2">
+                          <div className="px-6 pb-6 bg-white">
+                            <h3 className="text-xl font-semibold text-black mb-2">
                               <span className="text-black">{column.title}</span>
                             </h3>
                             {column.subtitle && (
-                              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                              <p className="text-sm text-black mb-4">
                                 {column.subtitle}
                               </p>
                             )}
@@ -180,7 +193,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                             {column.buttonText && column.buttonLink && (
                               <a
                                 href={column.buttonLink}
-                                className="inline-block mt-4 text-sm text-teal-700 dark:text-teal-300 hover:text-teal-900 dark:hover:text-teal-200 font-medium"
+                                className="inline-block mt-4 text-sm text-teal-700 hover:text-teal-900 font-medium"
                               >
                                 {column.buttonText} →
                               </a>
