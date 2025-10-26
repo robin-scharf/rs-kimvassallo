@@ -91,11 +91,9 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                             transition={{ type: 'spring', stiffness: 300, damping: 35 }}
                           >
                             <Image
-                              src={
-                                column.image.url.startsWith('/')
-                                  ? `${strapiUrl}${column.image.url}`
-                                  : column.image.url
-                              }
+                              src={/^https?:\/\//.test(column.image.url)
+                                ? column.image.url
+                                : `${strapiUrl}${column.image.url}`}
                               alt={column.image.alternativeText || column.title}
                               fill
                               className="object-cover rounded-t"
@@ -163,11 +161,9 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                                 transition={{ type: 'spring', stiffness: 300, damping: 35 }}
                               >
                                 <Image
-                                  src={
-                                    column.image.url.startsWith('/')
-                                      ? `${strapiUrl}${column.image.url}`
-                                      : column.image.url
-                                  }
+                                  src={/^https?:\/\//.test(column.image.url)
+                                    ? column.image.url
+                                    : `${strapiUrl}${column.image.url}`}
                                   alt={column.image.alternativeText || column.title}
                                   fill
                                   className="object-cover rounded-t"
@@ -209,7 +205,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
           </>
         ) : (
           <div className="text-center">
-              <p className="text-gray-700 dark:text-gray-300">No services available at this time.</p>
+            <p className="text-gray-700 dark:text-gray-300">No services available at this time.</p>
           </div>
         )}
 
