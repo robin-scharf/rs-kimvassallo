@@ -3,15 +3,16 @@
 import { Services } from '@/types/strapi';
 import Image from 'next/image';
 import React from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { getStrapiImageUrl } from '@/lib/utils';
 import { useRef } from 'react';
+import { useScroll, useTransform } from 'framer-motion';
 
 interface ServicesSectionProps {
   data: Services | null;
 }
 
 export default function ServicesSection({ data }: ServicesSectionProps) {
-  const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL?.replace('/api', '') || 'http://localhost:1337';
   const [openCard, setOpenCard] = React.useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   // Framer Motion scroll progress: 0 = fully visible, 1 = fully out of view
@@ -91,9 +92,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                             transition={{ type: 'spring', stiffness: 300, damping: 35 }}
                           >
                             <Image
-                              src={/^https?:\/\//.test(column.image.url)
-                                ? column.image.url
-                                : `${strapiUrl}${column.image.url}`}
+                              src={getStrapiImageUrl(column.image.url)}
                               alt={column.image.alternativeText || column.title}
                               fill
                               className="object-cover rounded-t"
@@ -161,9 +160,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
                                 transition={{ type: 'spring', stiffness: 300, damping: 35 }}
                               >
                                 <Image
-                                  src={/^https?:\/\//.test(column.image.url)
-                                    ? column.image.url
-                                    : `${strapiUrl}${column.image.url}`}
+                                  src={getStrapiImageUrl(column.image.url)}
                                   alt={column.image.alternativeText || column.title}
                                   fill
                                   className="object-cover rounded-t"

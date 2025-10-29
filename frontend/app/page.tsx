@@ -1,12 +1,13 @@
-import RichText from '@/components/RichText';
-import { getHeader, getMenuItems, getHero, getAbout, getServices, getContact, getFooter } from '@/lib/api';
+import { getHeader, getMenuItems, getHero, getAbout, getServices, getContact, getFooter, getFaqs } from '@/lib/api';
 import HeroSection from '@/components/HeroSection';
 // import { ModeToggle } from '@/components/ModeToggle';
 import HeaderSection from '@/components/HeaderSection';
 import AboutSection from '@/components/AboutSection';
 import ServicesSection from '@/components/ServicesSection';
 import ContactSection from '@/components/ContactSection';
+import FAQSection from '@/components/FAQSection';
 import ScrollToTop from '@/components/ScrollToTop';
+import RichText from '@/components/RichText';
 
 // Force dynamic rendering to ensure fresh data from Strapi
 export const dynamic = 'force-dynamic';
@@ -14,7 +15,7 @@ export const revalidate = 1;
 
 export default async function Home() {
   // Fetch all data with fallbacks to prevent build failures
-  const [header, menuItems, hero, about, services, contact, footer] = await Promise.allSettled([
+  const [header, menuItems, hero, about, services, contact, footer, faqs,] = await Promise.allSettled([
     getHeader(),
     getMenuItems(),
     getHero(),
@@ -22,6 +23,7 @@ export default async function Home() {
     getServices(),
     getContact(),
     getFooter(),
+    getFaqs(),
   ]).then(results => results.map(result => result.status === 'fulfilled' ? result.value : null));
 
   return (
@@ -31,6 +33,7 @@ export default async function Home() {
       <HeroSection hero={hero} />
       <AboutSection data={about} />
       <ServicesSection data={services} />
+      <FAQSection data={faqs} />
       <ContactSection data={contact} />
       {footer && (
         <footer className="bg-background dark:bg-background border-t border-border py-8">

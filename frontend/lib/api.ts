@@ -84,7 +84,6 @@ export async function getFooter() {
   return data?.data || null
 }
 
-
 export async function getTerms() {
   const data = await fetchAPI('/terms-of-service')
   return data?.data || null
@@ -93,4 +92,10 @@ export async function getTerms() {
 export async function getPrivacy() {
   const data = await fetchAPI('/privacy-policy')
   return data?.data || null
+}
+
+export async function getFaqs() {
+  // Collection type, returns array
+  const data = await fetchAPI('/faqs?sort=createdAt:asc')
+  return data?.data || []
 }
