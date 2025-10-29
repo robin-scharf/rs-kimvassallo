@@ -3,6 +3,7 @@
 import { About } from '@/types/strapi';
 import RichText from './RichText';
 import Image from 'next/image';
+import { getStrapiImageUrl } from '@/lib/utils';
 
 interface AboutSectionProps {
   data: About | null;
@@ -39,9 +40,7 @@ export default function AboutSection({ data }: AboutSectionProps) {
           <div className="flex justify-center mb-12">
             <div className="relative w-48 h-48 rounded-full overflow-hidden shadow-lg">
               <Image
-                src={/^https?:\/\//.test(data.profilePhoto.url)
-                  ? data.profilePhoto.url
-                  : `${process.env.NEXT_PUBLIC_STRAPI_API_URL?.replace('/api', '')}${data.profilePhoto.url}`}
+                src={getStrapiImageUrl(data.profilePhoto.url)}
                 alt={data.profilePhoto.alternativeText || 'Profile photo'}
                 fill
                 className="object-cover"

@@ -1,6 +1,7 @@
 "use client";
 import { Faqs } from '@/types/strapi';
 import React, { useEffect, useRef } from 'react';
+import { getStrapiImageUrl } from '@/lib/utils';
 import RichText from './RichText';
 
 interface FAQSectionProps {
@@ -26,29 +27,41 @@ export default function FAQSection({ data }: FAQSectionProps) {
     return () => document.removeEventListener('click', handleClick);
   }, []);
 
+  // Example offset graphic, replace src with Strapi singleType when available
+  const offsetGraphic = {
+    mobile: '/images/illustration-woman-online-mobile.svg',
+    desktop: '/images/illustration-woman-online-desktop.svg',
+    box: '/images/illustration-box-desktop.svg',
+  };
+
   if (!data) {
     return (
-      <section id="services" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary to-[#7f6edc] text-white">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-sm font-normal mb-12 uppercase tracking-widest text-center text-gray-300">
-            FAQs
-          </h2>
-          <div className="text-center">
-            <p className="text-gray-300">FAQs information coming soon...</p>
+        <div className="container mx-auto flex items-center py-20 px-4 sm:px-6 lg:px-8">
+          <div className="flex-auto flex flex-col md:flex-row items-center bg-white rounded-xl m-5 p-3 md:m-10 shadow-xl">
+            <img className="md:hidden flex-none pb-4 translate-x-2" src={offsetGraphic.mobile} alt="Woman Online" />
+            <div className="flex-none relative hidden md:block z-10 w-1/2">
+              <img className="z-20 relative translate-x-8" src={offsetGraphic.desktop} alt="Woman Online" />
+              <img className="z-40 absolute -bottom-8 left-12" src={offsetGraphic.box} alt="Box" />
+            </div>
+            <div className="flex-auto mb-2 w-full p-2">
+              <h1 className="flex-none pl-3 text-3xl py-8 font-black tracking-wide">FAQ</h1>
+              <p className="text-gray-400">FAQs information coming soon...</p>
+            </div>
           </div>
         </div>
-      </section>
-    );
-  }
+      );
+    }
 
   return (
-    <section
-      className="relative flex justify-center items-center min-h-[80vh] bg-gradient-to-br from-primary to-[#7f6edc] py-16 px-4"
-      style={{ zIndex: 1 }}
-    >
-      <div ref={faqRef} className="relative bg-white rounded-2xl shadow-xl flex flex-col md:flex-row w-full max-w-4xl p-8 md:p-16">
-        <div className="flex-1 flex flex-col justify-center items-center">
-          <h2 className="text-3xl font-bold mb-6 text-center">FAQ</h2>
+    <div className="container mx-auto flex items-center py-20 px-4 sm:px-6 lg:px-8">
+      <div className="flex-auto flex flex-col md:flex-row items-center bg-white rounded-xl m-5 p-3 md:m-10 shadow-xl">
+        <img className="md:hidden flex-none pb-4 translate-x-2" src={offsetGraphic.mobile} alt="Woman Online" />
+        <div className="flex-none relative hidden md:block z-10 w-1/2">
+          <img className="z-20 relative translate-x-8" src={offsetGraphic.desktop} alt="Woman Online" />
+          <img className="z-40 absolute -bottom-8 left-12" src={offsetGraphic.box} alt="Box" />
+        </div>
+        <div className="flex-auto mb-2 w-full p-2">
+          <h1 className="flex-none pl-3 text-3xl py-8 font-black tracking-wide">FAQ</h1>
           <div className="w-full">
             {data?.map((faqItem) => (
               <details
@@ -67,6 +80,6 @@ export default function FAQSection({ data }: FAQSectionProps) {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
