@@ -1,3 +1,20 @@
+export interface Faqs {
+  id: number
+  title: string
+  subtitle?: string
+  graphic?: StrapiImage
+  faqs: Faq[]
+}
+export interface FaqGraphic {
+  id: number
+  image?: StrapiImage
+  alt?: string
+}
+export interface Faq {
+  id: number
+  question: string
+  answer: string
+}
 export interface StrapiImage {
   id: number
   url: string

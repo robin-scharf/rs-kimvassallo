@@ -1,5 +1,17 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface FaqsColumn extends Struct.ComponentSchema {
+  collectionName: 'faqs_columns';
+  info: {
+    description: 'Column for FAQ section';
+    displayName: 'FAQ Column';
+  };
+  attributes: {
+    answer: Schema.Attribute.RichText & Schema.Attribute.Required;
+    question: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface FooterLink extends Struct.ComponentSchema {
   collectionName: 'components_footer_links';
   info: {
@@ -94,6 +106,7 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'faqs.column': FaqsColumn;
       'footer.link': FooterLink;
       'services.column': ServicesColumn;
       'shared.media': SharedMedia;

@@ -1,22 +1,29 @@
 {
-  "kind": "collectionType",
+  "kind": "singleType",
   "collectionName": "faqs",
   "info": {
     "singularName": "faq",
     "pluralName": "faqs",
-    "displayName": "FAQ"
+    "displayName": "FAQ",
+    "description": "FAQ section with title, graphic and columns"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
+  "pluginOptions": {},
   "attributes": {
-    "question": {
+    "title": {
       "type": "string",
-      "required": true
+      "required": false
     },
-    "answer": {
-      "type": "richtext",
-      "required": true
+    "subtitle": {
+      "type": "string",
+      "required": false
+    },
+    "columns": {
+      "type": "component",
+      "repeatable": true,
+      "component": "faqs.column"
     }
   }
 }

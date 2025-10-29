@@ -1,0 +1,17 @@
+{
+  "collectionName": "faqs_columns",
+  "info": {
+    "displayName": "FAQ Column",
+    "description": "Column for FAQ section"
+  },
+  "attributes": {
+    "question": {
+      "type": "string",
+      "required": true
+    },
+    "answer": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}
