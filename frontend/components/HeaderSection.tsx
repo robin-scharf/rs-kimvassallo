@@ -17,23 +17,15 @@ export default function HeaderSection({ header, menuItems }: HeaderSectionProps)
           <p className="text-base text-gray-700 dark:text-gray-200">{header?.location || 'Location'}</p>
         </div>
         <nav className="mt-8 flex justify-center gap-12 text-base">
-          {menuItems && menuItems.length > 0 ? (
-            menuItems.map((item) => (
-              <a
-                key={item.id}
-                href={item.anchor}
-                className="text-primary hover:text-primary-foreground font-medium"
-              >
-                {item.label}
-              </a>
-            ))
-          ) : (
-            <>
-                <a href="#about" className="text-primary hover:text-primary-foreground font-medium">About</a>
-                <a href="#services" className="text-primary hover:text-primary-foreground font-medium">Services</a>
-                <a href="#contact" className="text-primary hover:text-primary-foreground font-medium">Contact</a>
-            </>
-          )}
+          {menuItems && menuItems.length > 0 && menuItems.map((item) => (
+            <a
+              key={item.id}
+              href={item.anchor}
+              className="text-primary hover:text-primary-foreground font-medium"
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
       </div>
     </header>
