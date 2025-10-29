@@ -4,31 +4,17 @@
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Hero } from '@/types/strapi';
-import React, { useRef } from 'react';
+import { getStrapiImageUrl } from '@/lib/utils';
+import { useRef } from 'react';
 
 interface HeroSectionProps {
   hero: Hero | null;
 }
 
 export default function HeroSection({ hero }: HeroSectionProps) {
-  // Use direct media URL from Strapi, prepending origin only if needed
-
-  let backgroundImageUrl: string | null = null;
-  if (hero?.backgroundImage?.url) {
-    // If the URL is absolute (starts with http/https), use as-is
-    if (/^https?:\/\//.test(hero.backgroundImage.url)) {
-      backgroundImageUrl = hero.backgroundImage.url;
-    } else if (hero.backgroundImage.url.startsWith('/')) {
-      // Only prepend Strapi origin if relative path
-      const strapiOrigin = process.env.NEXT_PUBLIC_STRAPI_API_URL?.replace(/\/api$/, '') || 'http://localhost:1337';
-      backgroundImageUrl = `${strapiOrigin}${hero.backgroundImage.url}`;
-    } else {
-      // Unexpected format, use as-is
-      backgroundImageUrl = hero.backgroundImage.url;
-    }
-  }
-  console.log('Image URL from Strapi:', hero?.backgroundImage?.url);
-  console.log('Final backgroundImageUrl:', backgroundImageUrl);
+  const backgroundImageUrl = hero?.backgroundImage?.url
+    ? getStrapiImageUrl(hero.backgroundImage.url)
+    : null;
 
   const backgroundColor = hero?.backgroundColor || '#b08080';
   const title = hero?.title || 'Professional Therapy Services';

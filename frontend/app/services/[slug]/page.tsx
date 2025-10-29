@@ -9,6 +9,7 @@ import RichText from '@/components/RichText';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { getStrapiImageUrl } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 1;
@@ -31,8 +32,6 @@ export default async function ServicePage({ params }: ServicePageProps) {
   if (!service) {
     notFound();
   }
-
-  const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL?.replace('/api', '') || 'http://localhost:1337';
 
   return (
     <main className="min-h-screen relative">
@@ -73,7 +72,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
           {service.image && (
             <div className="relative w-full h-96 mb-12 rounded-lg overflow-hidden">
               <Image
-                src={`${strapiUrl}${service.image.url}`}
+                src={getStrapiImageUrl(service.image.url)}
                 alt={service.image.alternativeText || service.title}
                 fill
                 className="object-cover"
