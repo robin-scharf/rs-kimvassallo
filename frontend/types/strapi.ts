@@ -3,7 +3,7 @@ export interface Faqs {
   title: string
   subtitle?: string
   graphic?: StrapiImage
-  faqs: Faq[]
+  columns: Faq[]
 }
 export interface FaqGraphic {
   id: number

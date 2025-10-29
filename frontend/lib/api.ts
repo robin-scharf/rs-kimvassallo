@@ -95,7 +95,6 @@ export async function getPrivacy() {
 }
 
 export async function getFaqs() {
-  // Collection type, returns array
-  const data = await fetchAPI('/faqs?sort=createdAt:asc')
-  return data?.data || []
+  const data = await fetchAPI('/faq?populate=graphic&populate=columns')
+  return data?.data || null
 }
