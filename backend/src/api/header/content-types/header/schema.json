@@ -5,7 +5,7 @@
     "singularName": "header",
     "pluralName": "headers",
     "displayName": "Header",
-    "description": "Site header with name and location"
+    "description": "Site header with name"
   },
   "options": {
     "draftAndPublish": false
@@ -15,18 +15,6 @@
     "name": {
       "type": "string",
       "required": true
-    },
-    "credentials": {
-      "type": "string",
-      "required": false
-    },
-    "tagline": {
-      "type": "string",
-      "required": true
-    },
-    "location": {
-      "type": "string",
-      "required": false
     }
   }
 }

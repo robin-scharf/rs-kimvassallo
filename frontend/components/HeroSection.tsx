@@ -1,81 +1,88 @@
-"use client";
+'use client';
 
-"use client";
 import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Hero } from '@/types/strapi';
+import { Hero, Header, Global } from '@/types/strapi';
 import { getStrapiImageUrl } from '@/lib/utils';
-import { useRef } from 'react';
+import { ButtonNavigationGrid } from './ButtonNavigation';
+import { NAVIGATION, PLACEHOLDERS } from '@/lib/constants';
 
 interface HeroSectionProps {
   hero: Hero | null;
+  header: Header | null;
+  global: Global | null;
 }
 
-export default function HeroSection({ hero }: HeroSectionProps) {
-  const backgroundImageUrl = hero?.backgroundImage?.url
-    ? getStrapiImageUrl(hero.backgroundImage.url)
-    : null;
+/**
+ * Hero Section Component - Split Layout
+ * Left: Name, credentials, tagline, navigation grid
+ * Right: Professional photo
+ */
+export default function HeroSection({ hero, header, global }: HeroSectionProps) {
+  // Get professional photo or fallback
+  const photoUrl = hero?.professionalPhoto
+    ? getStrapiImageUrl(hero.professionalPhoto.url)
+    : PLACEHOLDERS.hero;
 
-  const backgroundColor = hero?.backgroundColor || '#b08080';
-  const title = hero?.title || 'Professional Therapy Services';
+  const photoAlt = hero?.professionalPhoto?.alternativeText ||
+    header?.name ||
+    'Professional photo';
+
+  // Use hero data for all text elements
+  const title = hero?.title || 'Kim Vassallo';
   const subtitle = hero?.subtitle || '';
-  const ctaButtonText = hero?.ctaButtonText || 'Contact';
-  const ctaButtonAnchor = hero?.ctaButtonAnchor || '#contact';
-
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
-  const y = useTransform(scrollYProgress, [0, 1], [0, 60]); // Move downward on scroll
+  const introText = hero?.introText || '';
 
   return (
-    <section
-      id="hero"
-      ref={sectionRef}
-      className="relative min-h-[400px] flex items-center justify-center overflow-hidden"
-      style={{ backgroundColor }}
-    >
-      {backgroundImageUrl && (
-        <motion.div
-          className="absolute inset-0 z-0"
-          style={{ scale, y, willChange: 'transform' }}
-        >
-          <Image
-            src={backgroundImageUrl}
-            alt={hero?.backgroundImage?.alternativeText || title}
-            fill
-            priority
-            className="object-cover"
-          />
-        </motion.div>
-      )}
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 z-10" style={{
-        background: 'linear-gradient(rgba(168, 118, 112, 0.7), rgba(168, 118, 112, 0.7))'
-      }} />
-      {/* Animated Content */}
-      <motion.div
-        className="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center"
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-      >
-        <h2 className="text-3xl sm:text-5xl font-light text-white mb-6 leading-tight" style={{ fontFamily: 'var(--font-lora), Lora, serif' }}>
-          {title}
-        </h2>
+    <section className="flex items-center justify-center p-[30px]" style={{ backgroundColor: global?.backgroundColor || '#f5f5f5' }}>
+      {/* Inner container with border */}
+      <div className="w-full max-w-[1400px] flex flex-col sm:grid sm:grid-cols-2 gap-0 bg-white shadow-sm min-h-[calc(100vh-60px)]">
+        {/* Professional Photo - appears first on mobile */}
+        <div className="relative min-h-[40vh] sm:min-h-full sm:order-2 p-[30px] bg-white dark:bg-black">
+          <div className="relative w-full h-full min-h-[300px]">
+            <Image
+              src={photoUrl}
+              alt={photoAlt}
+              fill
+              className="object-cover object-top sm:object-center grayscale"
+              priority
+              sizes="(max-width: 640px) 100vw, 50vw"
+              unoptimized={photoUrl.includes('placeholder')}
+            />
+          </div>
+        </div>
 
-        {subtitle && (
-          <p className="text-lg sm:text-xl text-white max-w-3xl mx-auto leading-relaxed mb-8">
-            {subtitle}
-          </p>
-        )}
+        {/* Text Content */}
+        <div className="flex flex-col justify-center px-8 md:px-12 lg:px-16 py-16 lg:py-24 sm:order-1" style={{ fontFamily: 'var(--font-raleway)' }}>
+          <div className="max-w-lg space-y-12">
+            {/* Title (Name) */}
+            <div className="space-y-3">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-wide text-foreground leading-tight uppercase" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+                {title}
+              </h1>
+              {/* Subtitle (Credentials) */}
+              {subtitle && (
+                <h2 className="text-sm sm:text-base tracking-wide text-muted-foreground max-w-md leading-relaxed uppercase">
+                  {subtitle}
+                </h2>
+              )}
+            </div>
 
-        <a
-          href={ctaButtonAnchor}
-          className="inline-block bg-primary text-primary-foreground px-8 py-3 text-base font-medium hover:bg-primary/90 transition-colors rounded-md"
-        >
-          {ctaButtonText}
-        </a>
-      </motion.div>
+            {/* Intro Text */}
+            {introText && (
+              <p className="text-base sm:text-lg text-foreground max-w-md leading-relaxed">
+                {introText}
+              </p>
+            )}
+
+            {/* Navigation Grid */}
+            <ButtonNavigationGrid
+              items={NAVIGATION.items}
+              columns={1}
+              className="mt-16"
+            />
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

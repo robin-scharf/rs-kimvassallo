@@ -45,71 +45,73 @@
 
 :root {
   --radius: 0.5rem;
-  --background: oklch(0.99 0 0);
-  --foreground: oklch(0.25 0 0);
+  /* Light theme - mimicking miljabrecherdemuro.com */
+  --background: oklch(0.99 0 0); /* Off-white background */
+  --foreground: oklch(0.30 0 0); /* Dark gray text */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.25 0 0);
+  --card-foreground: oklch(0.30 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.25 0 0);
-  --primary: oklch(0.55 0.15 200);
+  --popover-foreground: oklch(0.30 0 0);
+  --primary: oklch(0.30 0 0); /* Dark gray for primary elements */
   --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.95 0.01 200);
-  --secondary-foreground: oklch(0.25 0 0);
-  --muted: oklch(0.96 0.005 200);
-  --muted-foreground: oklch(0.50 0.01 200);
-  --accent: oklch(0.94 0.02 200);
-  --accent-foreground: oklch(0.25 0 0);
+  --secondary: oklch(0.96 0 0); /* Very light gray */
+  --secondary-foreground: oklch(0.30 0 0);
+  --muted: oklch(0.96 0.005 0);
+  --muted-foreground: oklch(0.55 0.01 0); /* Medium gray */
+  --accent: oklch(0.94 0.02 0);
+  --accent-foreground: oklch(0.30 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.90 0.005 200);
-  --input: oklch(0.90 0.005 200);
-  --ring: oklch(0.55 0.15 200);
+  --border: oklch(0.90 0.005 0); /* Light gray borders */
+  --input: oklch(0.90 0.005 0);
+  --ring: oklch(0.30 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
   --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.30 0 0);
+  --sidebar-primary: oklch(0.30 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-accent-foreground: oklch(0.30 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 }
 
 .dark {
+  /* Dark theme - inverted to maintain the same clean aesthetic */
   --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.20 0 0);
+  --card-foreground: oklch(0.97 0 0);
+  --popover: oklch(0.20 0 0);
+  --popover-foreground: oklch(0.97 0 0);
+  --primary: oklch(0.97 0 0);
+  --primary-foreground: oklch(0.145 0 0);
+  --secondary: oklch(0.25 0 0);
+  --secondary-foreground: oklch(0.97 0 0);
+  --muted: oklch(0.25 0 0);
+  --muted-foreground: oklch(0.65 0 0);
+  --accent: oklch(0.30 0 0);
+  --accent-foreground: oklch(0.97 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --ring: oklch(0.65 0 0);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar: oklch(0.20 0 0);
+  --sidebar-foreground: oklch(0.97 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-primary-foreground: oklch(0.97 0 0);
+  --sidebar-accent: oklch(0.25 0 0);
+  --sidebar-accent-foreground: oklch(0.97 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-ring: oklch(0.65 0 0);
 }
 
 @layer base {
@@ -118,5 +120,20 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  }
+  
+  /* Font family utilities */
+  .font-playfair {
+    font-family: var(--font-playfair), Georgia, serif;
+  }
+  
+  /* Custom utility classes for the design system */
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .section-spacing {
+    @apply py-16 md:py-24 lg:py-32;
   }
 }

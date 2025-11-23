@@ -5,7 +5,7 @@
     "singularName": "hero",
     "pluralName": "heros",
     "displayName": "Hero",
-    "description": "Hero section with background image"
+    "description": "Hero section with split layout and professional photo"
   },
   "options": {
     "draftAndPublish": false
@@ -20,28 +20,17 @@
       "type": "text",
       "required": false
     },
-    "backgroundImage": {
+    "introText": {
+      "type": "text",
+      "required": false
+    },
+    "professionalPhoto": {
       "type": "media",
       "multiple": false,
       "required": false,
       "allowedTypes": [
         "images"
       ]
-    },
-    "backgroundColor": {
-      "type": "string",
-      "required": false,
-      "default": "#b08080"
-    },
-    "ctaButtonText": {
-      "type": "string",
-      "required": false,
-      "default": "Contact"
-    },
-    "ctaButtonAnchor": {
-      "type": "string",
-      "required": false,
-      "default": "#contact"
     }
   }
 }

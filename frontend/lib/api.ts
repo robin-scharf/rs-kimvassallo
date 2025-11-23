@@ -55,7 +55,7 @@ export async function getMenuItems() {
 }
 
 export async function getHero() {
-  const data = await fetchAPI('/hero?populate=backgroundImage')
+  const data = await fetchAPI('/hero?populate=*')
   return data?.data || null
 }
 
@@ -64,8 +64,15 @@ export async function getAbout() {
   return data?.data || null
 }
 
+export async function getIndividualTherapy() {
+  const data = await fetchAPI('/individual-therapy?populate=*')
+  return data?.data || null
+}
+
 export async function getServices() {
-  const data = await fetchAPI('/service?populate[columns][populate]=image')
+  const data = await fetchAPI(
+    '/service?populate[image]=*&populate[columns][populate]=*'
+  )
   return data?.data || null
 }
 
@@ -75,7 +82,7 @@ export async function getContact() {
 }
 
 export async function getGlobal() {
-  const data = await fetchAPI('/global?populate=defaultSeo')
+  const data = await fetchAPI('/global?populate=*')
   return data?.data || null
 }
 
@@ -95,6 +102,6 @@ export async function getPrivacy() {
 }
 
 export async function getFaqs() {
-  const data = await fetchAPI('/faq?populate=graphic&populate=columns')
+  const data = await fetchAPI('/faq?populate=*')
   return data?.data || null
 }

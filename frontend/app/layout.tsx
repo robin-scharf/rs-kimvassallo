@@ -1,14 +1,31 @@
 import type { Metadata } from "next";
-import { Lora } from "next/font/google";
+import { Inter, Raleway, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { getGlobal } from "@/lib/api";
-import { ThemeProvider } from "../components/ThemeProvider"
+import { ThemeProvider } from "../components/ThemeProvider";
 
-const lora = Lora({
+// Primary font: Inter for clean, modern look similar to Helvetica
+const inter = Inter({
+  weight: ['300', '400', '500', '600'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+// Hero font: Raleway for elegant, sophisticated look
+const raleway = Raleway({
+  weight: ['300', '400', '500', '600'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-raleway',
+});
+
+// Heading font: Playfair Display for sub-page headings
+const playfair = Playfair_Display({
   weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-lora',
+  variable: '--font-playfair',
 });
 
 // Use short revalidation (1 second) as fallback + on-demand revalidation via webhooks
@@ -21,23 +38,20 @@ export async function generateMetadata(): Promise<Metadata> {
   // Fallback values if API fails
   const fallbackTitle = "Kim Vassallo, LCSW-R - Therapy for Women";
   const fallbackDescription = "Licensed Clinical Social Worker specializing in women's health, perinatal mental health, and grief and loss support.";
-  const fallbackFavicon = "/favicon.ico";
-
-  // Strapi favicon may be a file object or string; handle both
-  let faviconUrl = fallbackFavicon;
-  if (global?.favicon) {
-    if (typeof global.favicon === "string") {
-      faviconUrl = global.favicon;
-    } else if (global.favicon.url) {
-      faviconUrl = global.favicon.url;
-    }
-  }
 
   return {
     title: global?.defaultSeo?.metaTitle || global?.siteName || fallbackTitle,
     description: global?.defaultSeo?.metaDescription || global?.siteDescription || fallbackDescription,
     icons: {
-      icon: faviconUrl,
+      icon: [
+        { url: '/icon-16.png', sizes: '16x16', type: 'image/png' },
+        { url: '/icon-32.png', sizes: '32x32', type: 'image/png' },
+        { url: '/icon.png', sizes: '512x512', type: 'image/png' },
+      ],
+      apple: [
+        { url: '/icon-180.png', sizes: '180x180', type: 'image/png' },
+      ],
+      shortcut: '/favicon.ico',
     },
   };
 }
@@ -49,10 +63,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <body className={`font-sans antialiased ${lora.variable}`} style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}>
+      <body className={`${inter.variable} ${raleway.variable} ${playfair.variable} font-sans antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >

@@ -1,55 +1,65 @@
-import { getTerms } from '@/lib/api';
-import { Terms } from '@/types/strapi';
+import { getTerms, getHeader, getFooter, getMenuItems } from '@/lib/api';
+import { Section, Heading, Button } from '@/components/hoc';
+import HeaderSection from '@/components/HeaderSection';
+import FooterSection from '@/components/FooterSection';
 import RichText from '@/components/RichText';
-import Link from 'next/link';
+import ScrollToTop from '@/components/ScrollToTop';
+import { ArrowLeft } from 'lucide-react';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 1;
 
 export default async function TermsPage() {
-  let terms: Terms | null = null;
-
-  try {
-    terms = await getTerms();
-  } catch (error) {
-    console.error('Failed to fetch terms of service:', error);
-  }
+  const [terms, header, footer, menuItems] = await Promise.allSettled([
+    getTerms(),
+    getHeader(),
+    getFooter(),
+    getMenuItems(),
+  ]).then(results => results.map(result => result.status === 'fulfilled' ? result.value : null));
 
   return (
-    <div className="min-h-screen bg-[#f5f1ed]">
-      {/* Header */}
-      <header className="bg-[#f5f1ed] border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center">
-            <Link href="/" className="text-teal-700 hover:text-teal-800 text-sm">
-              ← Back to Home
-            </Link>
-          </div>
-        </div>
-      </header>
+    <main className="min-h-screen relative">
+      <HeaderSection header={header} menuItems={menuItems || []} />
 
-      {/* Content */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {!terms ? (
-          <div className="text-center">
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-4" style={{ fontFamily: 'var(--font-lora), Lora, serif' }}>
-              Terms of Service
-            </h1>
-            <p className="text-gray-600">Content not available. Please check back later.</p>
-          </div>
-        ) : (
-          <>
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-4" style={{ fontFamily: 'var(--font-lora), Lora, serif' }}>
-              {terms.title}
-            </h1>
-            {terms.lastUpdated && (
-              <p className="text-sm text-gray-600 mb-8">
-                Last Updated: {new Date(terms.lastUpdated).toLocaleDateString()}
-              </p>
-            )}
+      {/* Back Navigation */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <Button href="/" variant="ghost" size="sm" className="gap-2">
+          <ArrowLeft className="w-4 h-4" />
+          Back to Home
+        </Button>
+      </div>
+
+      {/* Page Title */}
+      <Section className="bg-background text-center pt-8">
+        <Heading level={1} className="text-foreground">
+          {terms?.title || 'Terms of Service'}
+        </Heading>
+        {terms?.lastUpdated && (
+          <p className="text-sm text-muted-foreground mt-4">
+            Last Updated: {new Date(terms.lastUpdated).toLocaleDateString()}
+          </p>
+        )}
+      </Section>
+
+      {/* Content Section */}
+      {terms?.content && (
+        <Section className="bg-muted/30">
+          <div className="max-w-4xl mx-auto">
             <div className="prose prose-lg max-w-none">
               <RichText content={terms.content} />
             </div>
-          </>
-        )}
-      </main>
-    </div>
+          </div>
+        </Section>
+      )}
+
+      {!terms && (
+        <Section className="bg-background text-center">
+          <p className="text-muted-foreground">Content not available. Please check back later.</p>
+        </Section>
+      )}
+
+      <FooterSection footer={footer} />
+      <ScrollToTop />
+    </main>
   );
 }

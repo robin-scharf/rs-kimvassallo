@@ -1,69 +1,54 @@
-import { getHeader, getMenuItems, getHero, getAbout, getServices, getContact, getFooter, getFaqs } from '@/lib/api';
+import { getHeader, getHero, getFooter, getGlobal } from '@/lib/api';
 import HeroSection from '@/components/HeroSection';
-// import { ModeToggle } from '@/components/ModeToggle';
-import HeaderSection from '@/components/HeaderSection';
-import AboutSection from '@/components/AboutSection';
-import ServicesSection from '@/components/ServicesSection';
-import ContactSection from '@/components/ContactSection';
-import FAQSection from '@/components/FAQSection';
+import FooterSection from '@/components/FooterSection';
 import ScrollToTop from '@/components/ScrollToTop';
-import RichText from '@/components/RichText';
 
 // Force dynamic rendering to ensure fresh data from Strapi
 export const dynamic = 'force-dynamic';
 export const revalidate = 1;
 
 export default async function Home() {
-  // Fetch all data with fallbacks to prevent build failures
-  const [header, menuItems, hero, about, services, contact, footer, faqs,] = await Promise.allSettled([
+  // Fetch required data with fallbacks
+  const [header, hero, footer, global] = await Promise.allSettled([
     getHeader(),
-    getMenuItems(),
     getHero(),
-    getAbout(),
-    getServices(),
-    getContact(),
     getFooter(),
-    getFaqs(),
+    getGlobal(),
   ]).then(results => results.map(result => result.status === 'fulfilled' ? result.value : null));
 
+  // Schema.org structured data
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": header?.name || hero?.title || "Kim Vassallo",
+    "jobTitle": header?.credentials || "Licensed Clinical Social Worker",
+    "description": hero?.introText || global?.siteDescription || "Licensed Clinical Social Worker specializing in therapy for women",
+    "url": "https://kimvassallo.com",
+    ...(footer?.email && { "email": footer.email }),
+    ...(footer?.phone && { "telephone": footer.phone }),
+    ...(footer?.linkedinUrl && { "sameAs": [footer.linkedinUrl, footer.instagramUrl].filter(Boolean) }),
+  };
+
   return (
-    <main className="min-h-screen relative">
-      {/* Top right theme toggle removed for static light mode */}
-      <HeaderSection header={header} menuItems={menuItems || []} />
-      <HeroSection hero={hero} />
-      <AboutSection data={about} />
-      <ServicesSection data={services} />
-      <FAQSection data={faqs} />
-      <ContactSection data={contact} />
-      {footer && (
-        <footer className="bg-background dark:bg-background border-t border-border py-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            {footer.copyrightText && (
-              <RichText content={footer.copyrightText} />
-            )}
-            <div className="flex justify-center items-center gap-6 flex-wrap">
-              {footer.privacyLink && (
-                <a
-                  href={footer.privacyLink}
-                  className="text-primary hover:text-primary-foreground font-medium text-sm"
-                >
-                  Privacy Policy
-                </a>
-              )}
-              {footer.termsLink && (
-                <a
-                  href={footer.termsLink}
-                  className="text-primary hover:text-primary-foreground font-medium text-sm"
-                >
-                  Terms of Service
-                </a>
-              )}
-            </div>
-          </div>
-        </footer>
-      )}
-      <ScrollToTop />
-      {/* Bottom right theme toggle for mobile/scroll */}
-    </main>
+    <>
+      {/* Schema.org structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
+
+      <main className="min-h-screen relative">
+        {/* Header hidden for hero-only layout */}
+        {/* <HeaderSection header={header} menuItems={[]} /> */}
+
+        {/* Hero with split layout and navigation */}
+        <HeroSection hero={hero} header={header} global={global} />
+
+        {/* Footer with social icons */}
+        <FooterSection footer={footer} />
+
+        <ScrollToTop />
+      </main>
+    </>
   );
 }

@@ -1,20 +1,3 @@
-export interface Faqs {
-  id: number
-  title: string
-  subtitle?: string
-  graphic?: StrapiImage
-  columns: Faq[]
-}
-export interface FaqGraphic {
-  id: number
-  image?: StrapiImage
-  alt?: string
-}
-export interface Faq {
-  id: number
-  question: string
-  answer: string
-}
 export interface StrapiImage {
   id: number
   url: string
@@ -33,9 +16,6 @@ export interface Header {
   id: number
   documentId: string
   name: string
-  credentials?: string
-  tagline: string
-  location?: string
 }
 
 export interface MenuItem {
@@ -51,10 +31,17 @@ export interface Hero {
   documentId: string
   title: string
   subtitle?: string
-  backgroundImage?: StrapiImage
+  introText?: string
+  professionalPhoto?: StrapiImage
   backgroundColor?: string
-  ctaButtonText?: string
-  ctaButtonAnchor?: string
+}
+
+export interface AboutSection {
+  id: number
+  title: string
+  content: string
+  graphic?: StrapiImage
+  graphicPosition: 'left' | 'right'
 }
 
 export interface About {
@@ -64,6 +51,26 @@ export interface About {
   subtitle?: string
   profilePhoto?: StrapiImage
   content?: string
+  sections?: AboutSection[]
+}
+
+export interface FAQItem {
+  id: number
+  question: string
+  answer: string
+}
+
+export interface IndividualTherapy {
+  id: number
+  documentId: string
+  title: string
+  content?: string
+  approachTitle?: string
+  approachContent?: string
+  faqTitle?: string
+  faqItems?: FAQItem[]
+  groupsTitle?: string
+  groupsContent?: string
 }
 
 export interface ServiceColumn {
@@ -104,14 +111,21 @@ export interface Global {
     metaTitle: string
     metaDescription: string
   }
+  favicon?: StrapiImage | string
+  backgroundColor?: string
+  buttonHoverColor?: string
 }
 
 export interface Footer {
   id: number
   documentId: string
   copyrightText?: string
-  privacyLink?: string
-  termsLink?: string
+  linkedinUrl?: string
+  instagramUrl?: string
+  phone?: string
+  email?: string
+  privacyUrl?: string
+  termsUrl?: string
 }
 
 export interface Terms {
@@ -128,4 +142,24 @@ export interface Privacy {
   title: string
   content: string
   lastUpdated?: string
+}
+
+export interface Faqs {
+  id: number
+  title: string
+  subtitle?: string
+  graphic?: StrapiImage
+  columns: Faq[]
+}
+
+export interface FaqGraphic {
+  id: number
+  image?: StrapiImage
+  alt?: string
+}
+
+export interface Faq {
+  id: number
+  question: string
+  answer: string
 }

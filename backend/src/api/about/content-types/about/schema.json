@@ -5,7 +5,7 @@
     "singularName": "about",
     "pluralName": "abouts",
     "displayName": "About",
-    "description": "Write about yourself and the content you create"
+    "description": "About page with intro section and additional content sections"
   },
   "options": {
     "draftAndPublish": false
@@ -31,6 +31,11 @@
     "content": {
       "type": "richtext",
       "required": false
+    },
+    "sections": {
+      "type": "component",
+      "repeatable": true,
+      "component": "about.section"
     }
   }
 }

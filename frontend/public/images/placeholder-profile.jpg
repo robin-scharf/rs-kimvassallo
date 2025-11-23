@@ -1,0 +1,9 @@
+<svg width="800" height="800" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="400" cy="400" r="400" fill="#e5e5e5"/>
+  <text x="400" y="400" font-family="Arial, sans-serif" font-size="36" fill="#999" text-anchor="middle">
+    Profile Photo
+  </text>
+  <text x="400" y="450" font-family="Arial, sans-serif" font-size="20" fill="#999" text-anchor="middle">
+    800 x 800
+  </text>
+</svg>

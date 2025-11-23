@@ -433,7 +433,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiAboutAbout extends Struct.SingleTypeSchema {
   collectionName: 'abouts';
   info: {
-    description: 'Write about yourself and the content you create';
+    description: 'About page with intro section and additional content sections';
     displayName: 'About';
     pluralName: 'abouts';
     singularName: 'about';
@@ -451,6 +451,7 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     profilePhoto: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
+    sections: Schema.Attribute.Component<'about.section', true>;
     subtitle: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
@@ -524,7 +525,7 @@ export interface ApiFaqFaq extends Struct.SingleTypeSchema {
 export interface ApiFooterFooter extends Struct.SingleTypeSchema {
   collectionName: 'footers';
   info: {
-    description: 'Site footer with copyright and legal links';
+    description: 'Site footer with copyright and social links';
     displayName: 'Footer';
     pluralName: 'footers';
     singularName: 'footer';
@@ -537,16 +538,20 @@ export interface ApiFooterFooter extends Struct.SingleTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    email: Schema.Attribute.Email;
+    instagramUrl: Schema.Attribute.String;
+    linkedinUrl: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::footer.footer'
     > &
       Schema.Attribute.Private;
-    privacyLink: Schema.Attribute.String &
+    phone: Schema.Attribute.String;
+    privacyUrl: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'/privacy'>;
     publishedAt: Schema.Attribute.DateTime;
-    termsLink: Schema.Attribute.String & Schema.Attribute.DefaultTo<'/terms'>;
+    termsUrl: Schema.Attribute.String & Schema.Attribute.DefaultTo<'/terms'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -565,6 +570,10 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    backgroundColor: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'#f5f5f5'>;
+    buttonHoverColor: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'#e0e0e0'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -588,7 +597,7 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
 export interface ApiHeaderHeader extends Struct.SingleTypeSchema {
   collectionName: 'headers';
   info: {
-    description: 'Site header with name and location';
+    description: 'Site header with name';
     displayName: 'Header';
     pluralName: 'headers';
     singularName: 'header';
@@ -600,17 +609,14 @@ export interface ApiHeaderHeader extends Struct.SingleTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    credentials: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::header.header'
     > &
       Schema.Attribute.Private;
-    location: Schema.Attribute.String;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    tagline: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -620,7 +626,7 @@ export interface ApiHeaderHeader extends Struct.SingleTypeSchema {
 export interface ApiHeroHero extends Struct.SingleTypeSchema {
   collectionName: 'heros';
   info: {
-    description: 'Hero section with background image';
+    description: 'Hero section with split layout and professional photo';
     displayName: 'Hero';
     pluralName: 'heros';
     singularName: 'hero';
@@ -629,22 +635,59 @@ export interface ApiHeroHero extends Struct.SingleTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
-    backgroundColor: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'#b08080'>;
-    backgroundImage: Schema.Attribute.Media<'images'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    ctaButtonAnchor: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'#contact'>;
-    ctaButtonText: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'Contact'>;
+    introText: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::hero.hero'> &
       Schema.Attribute.Private;
+    professionalPhoto: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
     subtitle: Schema.Attribute.Text;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiIndividualTherapyIndividualTherapy
+  extends Struct.SingleTypeSchema {
+  collectionName: 'individual_therapies';
+  info: {
+    description: 'Individual therapy page content with themes, approach, FAQ, and groups';
+    displayName: 'Individual Therapy';
+    pluralName: 'individual-therapies';
+    singularName: 'individual-therapy';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    approachContent: Schema.Attribute.RichText;
+    approachTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Approach'>;
+    content: Schema.Attribute.RichText;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    faqItems: Schema.Attribute.Component<'faq.item', true>;
+    faqTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Frequently Asked Questions'>;
+    groupsContent: Schema.Attribute.RichText;
+    groupsTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Groups + Workshops'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::individual-therapy.individual-therapy'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Individual Psychotherapy'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -708,39 +751,6 @@ export interface ApiPrivacyPolicyPrivacyPolicy extends Struct.SingleTypeSchema {
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Privacy Policy'>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiServiceService extends Struct.SingleTypeSchema {
-  collectionName: 'services';
-  info: {
-    description: 'Services section with title, subtitle and columns';
-    displayName: 'Services';
-    pluralName: 'services';
-    singularName: 'service';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    columns: Schema.Attribute.Component<'services.column', true>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::service.service'
-    > &
-      Schema.Attribute.Private;
-    offersOnlineAppointments: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<false>;
-    publishedAt: Schema.Attribute.DateTime;
-    subtitle: Schema.Attribute.String;
-    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1297,9 +1307,9 @@ declare module '@strapi/strapi' {
       'api::global.global': ApiGlobalGlobal;
       'api::header.header': ApiHeaderHeader;
       'api::hero.hero': ApiHeroHero;
+      'api::individual-therapy.individual-therapy': ApiIndividualTherapyIndividualTherapy;
       'api::menu-item.menu-item': ApiMenuItemMenuItem;
       'api::privacy-policy.privacy-policy': ApiPrivacyPolicyPrivacyPolicy;
-      'api::service.service': ApiServiceService;
       'api::terms-of-service.terms-of-service': ApiTermsOfServiceTermsOfService;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

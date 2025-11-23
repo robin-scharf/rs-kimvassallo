@@ -1,4 +1,5 @@
 import { Header, MenuItem } from '@/types/strapi';
+import Link from 'next/link';
 
 interface HeaderSectionProps {
   header: Header | null;
@@ -8,23 +9,21 @@ interface HeaderSectionProps {
 export default function HeaderSection({ header, menuItems }: HeaderSectionProps) {
   return (
     <header className="bg-white dark:bg-black border-b border-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="text-center">
-          <h1 className="text-3xl sm:text-4xl font-bold text-primary mb-2" style={{ fontFamily: 'var(--font-lora), Lora, serif' }}>
+          <h1 className="text-3xl sm:text-4xl font-bold text-primary mb-2" style={{ fontFamily: 'var(--font-playfair), serif' }}>
             {header?.name || 'Welcome'}
-            {header?.credentials && <span className="font-normal">, {header.credentials}</span>}
           </h1>
-          <p className="text-base text-gray-700 dark:text-gray-200">{header?.location || 'Location'}</p>
         </div>
-        <nav className="mt-8 flex justify-center gap-12 text-base">
+        <nav className="mt-6 flex justify-center gap-12 text-base">
           {menuItems && menuItems.length > 0 && menuItems.map((item) => (
-            <a
+            <Link
               key={item.id}
               href={item.anchor}
-              className="text-primary hover:text-primary-foreground font-medium"
+              className="text-primary hover:text-primary-foreground font-medium transition-colors"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
       </div>

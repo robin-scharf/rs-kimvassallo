@@ -1,5 +1,33 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface AboutSection extends Struct.ComponentSchema {
+  collectionName: 'components_about_sections';
+  info: {
+    description: 'A content section with title, rich text content, and optional image';
+    displayName: 'About Section';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText & Schema.Attribute.Required;
+    graphic: Schema.Attribute.Media<'images'>;
+    graphicPosition: Schema.Attribute.Enumeration<['left', 'right']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'left'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface FaqItem extends Struct.ComponentSchema {
+  collectionName: 'components_faq_items';
+  info: {
+    description: 'A single FAQ question and answer pair';
+    displayName: 'FAQ Item';
+  };
+  attributes: {
+    answer: Schema.Attribute.RichText & Schema.Attribute.Required;
+    question: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface FaqsColumn extends Struct.ComponentSchema {
   collectionName: 'faqs_columns';
   info: {
@@ -106,6 +134,8 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'about.section': AboutSection;
+      'faq.item': FaqItem;
       'faqs.column': FaqsColumn;
       'footer.link': FooterLink;
       'services.column': ServicesColumn;

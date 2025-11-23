@@ -40,5 +40,5 @@
     "uuid": "a3bc820f-5e05-455a-a2be-0a117eed3d41",
     "installId": "359c6241b4f36aa33d665384e53cea73279ed611c0f63767833f4cbdfa6fae45"
   },
-  "packageManager": "pnpm@10.19.0"
+  "packageManager": "pnpm@10.23.0+sha512.21c4e5698002ade97e4efe8b8b4a89a8de3c85a37919f957e7a0f30f38fbc5bbdd05980ffe29179b2fb6e6e691242e098d945d1601772cad0fef5fb6411e2a4b"
 }

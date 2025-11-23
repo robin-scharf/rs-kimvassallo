@@ -30,6 +30,16 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.seo"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "required": false,
+      "default": "#f5f5f5"
+    },
+    "buttonHoverColor": {
+      "type": "string",
+      "required": false,
+      "default": "#e0e0e0"
     }
   }
 }
