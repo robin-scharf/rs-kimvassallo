@@ -4,7 +4,7 @@
 // SPACING
 export const SPACING = {
   section: {
-    py: 'py-16 md:py-24 lg:py-32',
+    py: 'py-12 md:py-16 lg:py-20',
     px: 'px-4 sm:px-6 lg:px-8',
   },
   container: {

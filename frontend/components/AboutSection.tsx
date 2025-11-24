@@ -4,58 +4,53 @@ import { About } from '@/types/strapi';
 import RichText from './RichText';
 import Image from 'next/image';
 import { getStrapiImageUrl } from '@/lib/utils';
+import { Section } from './hoc';
 
 interface AboutSectionProps {
-  data: About | null;
+  about: About | null;
 }
 
-export default function AboutSection({ data }: AboutSectionProps) {
-  if (!data) {
-    return (
-      <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-12 uppercase tracking-wide text-center">
-            About
-          </h2>
-          <p className="text-center text-muted-foreground">Content coming soon...</p>
-        </div>
-      </section>
-    );
-  }
-
+/**
+ * About Section Component
+ * Displays the intro section with profile photo and content
+ */
+export default function AboutSection({ about }: AboutSectionProps) {
   return (
-    <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-background text-foreground">
+    <Section id="about" className="bg-background !py-6 md:!py-8 lg:!py-10 pt-0">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-12 uppercase tracking-wide text-center">
-          {data.title}
-        </h2>
-        {/* Subtitle */}
-        {data.subtitle && (
-          <p className="text-lg text-center text-muted-foreground mb-8">
-            {data.subtitle}
+        {about?.subtitle && (
+          <p className="text-lg text-muted-foreground mb-8 text-center">
+            {about.subtitle}
           </p>
         )}
-        {/* Profile Photo */}
-        {data.profilePhoto && (
-          <div className="flex justify-center mb-12">
+
+        {about?.profilePhoto && (
+          <div className="flex justify-center mb-8">
             <div className="relative w-48 h-48 rounded-full overflow-hidden shadow-lg">
               <Image
-                src={getStrapiImageUrl(data.profilePhoto.url)}
-                alt={data.profilePhoto.alternativeText || 'Profile photo'}
+                src={getStrapiImageUrl(about.profilePhoto.url)}
+                alt={about.profilePhoto.alternativeText || 'Profile photo'}
                 fill
                 className="object-cover"
                 priority
+                unoptimized={getStrapiImageUrl(about.profilePhoto.url).includes('placeholder')}
               />
             </div>
           </div>
         )}
-        {/* Content - Richtext */}
-        {data.content && (
-          <div className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            <RichText content={data.content} />
+
+        {about?.content && (
+          <div className="prose prose-lg max-w-none">
+            <RichText content={about.content} />
           </div>
         )}
+
+        {!about && (
+          <p className="text-center text-muted-foreground">
+            Content not available. Please check back later.
+          </p>
+        )}
       </div>
-    </section>
+    </Section>
   );
 }

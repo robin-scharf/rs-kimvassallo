@@ -23,11 +23,14 @@ export async function fetchAPI(endpoint: string, options = {}) {
     console.log(`[API] Response status for ${endpoint}: ${response.status}`)
 
     if (!response.ok) {
-      console.error(
-        `[API] Failed: ${response.status} ${response.statusText} for ${endpoint}`
-      )
-      const errorText = await response.text()
-      console.error(`[API] Error body:`, errorText)
+      // Don't log 404s for single types - they might not be created yet
+      if (response.status !== 404) {
+        console.error(
+          `[API] Failed: ${response.status} ${response.statusText} for ${endpoint}`
+        )
+        const errorText = await response.text()
+        console.error(`[API] Error body:`, errorText)
+      }
       return null
     }
 
@@ -60,7 +63,9 @@ export async function getHero() {
 }
 
 export async function getAbout() {
-  const data = await fetchAPI('/about?populate=*')
+  const data = await fetchAPI(
+    '/about?populate=profilePhoto&populate=sections.graphic'
+  )
   return data?.data || null
 }
 

@@ -21,29 +21,31 @@ export default function HeaderSection({ header, menuItems }: HeaderSectionProps)
           </h1>
         </div>
         <nav className="mt-6 flex justify-center gap-8 text-base">
-          {menuItems && menuItems.length > 0 && menuItems.map((item) => {
-            // Match exact path or if current path starts with the slug (for nested routes)
-            const isActive = pathname === item.slug || (item.slug !== '/' && pathname.startsWith(item.slug));
-            return (
-              <Link
-                key={item.id}
-                href={item.slug}
-                className={`
-                  px-4 py-2 rounded-md transition-all duration-200
-                  ${isActive
-                    ? 'bg-primary/10 dark:bg-primary/20'
-                    : 'hover:bg-primary/5 dark:hover:bg-primary/10'
-                  }
-                `}
-                style={{
-                  fontFamily: isActive ? 'var(--font-playfair), serif' : 'var(--font-inter), sans-serif',
-                  fontWeight: isActive ? '600' : '500'
-                }}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
+          {menuItems && menuItems.length > 0 && menuItems
+            .filter(item => item.slug) // Filter out items without slugs
+            .map((item) => {
+              // Match exact path or if current path starts with the slug (for nested routes)
+              const isActive = pathname === item.slug || (item.slug !== '/' && pathname.startsWith(item.slug));
+              return (
+                <Link
+                  key={item.id}
+                  href={item.slug}
+                  className={`
+                    px-4 py-2 rounded-md transition-all duration-200
+                    ${isActive
+                      ? 'bg-primary/10 dark:bg-primary/20'
+                      : 'hover:bg-primary/5 dark:hover:bg-primary/10'
+                    }
+                  `}
+                  style={{
+                    fontFamily: isActive ? 'var(--font-playfair), serif' : 'var(--font-inter), sans-serif',
+                    fontWeight: isActive ? '600' : '500'
+                  }}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
         </nav>
       </div>
     </header>
