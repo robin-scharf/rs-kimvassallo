@@ -22,7 +22,7 @@ export interface MenuItem {
   id: number
   documentId: string
   label: string
-  anchor: string
+  slug: string
   order: number
 }
 
