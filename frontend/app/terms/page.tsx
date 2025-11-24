@@ -1,40 +1,28 @@
-import { getTerms, getHeader, getFooter, getMenuItems } from '@/lib/api';
+import { getTerms } from '@/lib/api';
 import { Section, Heading } from '@/components/hoc';
-import HeaderSection from '@/components/HeaderSection';
-import FooterSection from '@/components/FooterSection';
-import BackNavigation from '@/components/BackNavigation';
 import RichText from '@/components/RichText';
-import ScrollToTop from '@/components/ScrollToTop';
+import PageTitle from '@/components/PageTitle';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 1;
 
 export default async function TermsPage() {
-  const [terms, header, footer, menuItems] = await Promise.allSettled([
-    getTerms(),
-    getHeader(),
-    getFooter(),
-    getMenuItems(),
-  ]).then(results => results.map(result => result.status === 'fulfilled' ? result.value : null));
+  const terms = await getTerms();
 
   return (
-    <main className="min-h-screen relative">
-      <HeaderSection header={header} menuItems={menuItems || []} />
-
-      <BackNavigation
-        title={
-          <div>
-            <Heading level={1} className="text-foreground">
-              {terms?.title || 'Terms of Service'}
-            </Heading>
-            {terms?.lastUpdated && (
-              <p className="text-sm text-muted-foreground mt-2">
-                Last Updated: {new Date(terms.lastUpdated).toLocaleDateString()}
-              </p>
-            )}
-          </div>
-        }
-      />
+    <>
+      <PageTitle>
+        <div>
+          <Heading level={1} className="text-foreground">
+            {terms?.title || 'Terms of Service'}
+          </Heading>
+          {terms?.lastUpdated && (
+            <p className="text-sm text-muted-foreground mt-2">
+              Last Updated: {new Date(terms.lastUpdated).toLocaleDateString()}
+            </p>
+          )}
+        </div>
+      </PageTitle>
 
       {/* Content Section */}
       {terms?.content && (
@@ -52,9 +40,6 @@ export default async function TermsPage() {
           <p className="text-muted-foreground">Content not available. Please check back later.</p>
         </Section>
       )}
-
-      <FooterSection footer={footer} />
-      <ScrollToTop />
-    </main>
+    </>
   );
 }

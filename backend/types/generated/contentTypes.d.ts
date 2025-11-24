@@ -656,7 +656,7 @@ export interface ApiIndividualTherapyIndividualTherapy
   extends Struct.SingleTypeSchema {
   collectionName: 'individual_therapies';
   info: {
-    description: 'Individual therapy page content with themes, approach, FAQ, and groups';
+    description: 'Individual therapy page content with intro section and additional content sections';
     displayName: 'Individual Therapy';
     pluralName: 'individual-therapies';
     singularName: 'individual-therapy';
@@ -665,9 +665,6 @@ export interface ApiIndividualTherapyIndividualTherapy
     draftAndPublish: false;
   };
   attributes: {
-    approachContent: Schema.Attribute.RichText;
-    approachTitle: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'Approach'>;
     content: Schema.Attribute.RichText;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -675,16 +672,16 @@ export interface ApiIndividualTherapyIndividualTherapy
     faqItems: Schema.Attribute.Component<'faq.item', true>;
     faqTitle: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Frequently Asked Questions'>;
-    groupsContent: Schema.Attribute.RichText;
-    groupsTitle: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'Groups + Workshops'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::individual-therapy.individual-therapy'
     > &
       Schema.Attribute.Private;
+    profilePhoto: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
+    sections: Schema.Attribute.Component<'about.section', true>;
+    subtitle: Schema.Attribute.String;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Individual Psychotherapy'>;
