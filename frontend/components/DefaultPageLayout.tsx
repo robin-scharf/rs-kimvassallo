@@ -1,18 +1,19 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { ReactNode, createContext, useContext, useState, useEffect } from 'react';
+import { ReactNode, createContext, useContext, useState } from 'react';
 import HeaderSection from './HeaderSection';
 import FooterSection from './FooterSection';
 import BackNavigation from './BackNavigation';
 import ScrollToTop from './ScrollToTop';
 import { Heading } from './hoc';
+import { Header, Footer, MenuItem } from '@/types/strapi';
 
 interface DefaultPageLayoutProps {
   children: ReactNode;
-  header: any;
-  footer: any;
-  menuItems: any[];
+  header: Header;
+  footer: Footer;
+  menuItems: MenuItem[];
 }
 
 interface PageTitleContextType {
@@ -40,12 +41,19 @@ export default function DefaultPageLayout({
 }: DefaultPageLayoutProps) {
   const pathname = usePathname();
   const isMinimalPage = MINIMAL_PAGES.includes(pathname);
-  const [customTitle, setCustomTitle] = useState<ReactNode | null>(null);
 
-  // Reset custom title on route change
-  useEffect(() => {
-    setCustomTitle(null);
-  }, [pathname]);
+  // Store custom title with pathname to auto-reset on route change
+  const [titleState, setTitleState] = useState<{ pathname: string; title: ReactNode | null }>({
+    pathname,
+    title: null
+  });
+
+  // Get current title, resetting if pathname changed
+  const customTitle = titleState.pathname === pathname ? titleState.title : null;
+
+  const setCustomTitle = (title: ReactNode) => {
+    setTitleState({ pathname, title });
+  };
 
   // For minimal pages (homepage), just render children with ScrollToTop
   if (isMinimalPage) {

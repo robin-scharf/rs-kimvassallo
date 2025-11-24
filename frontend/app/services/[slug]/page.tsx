@@ -1,5 +1,4 @@
 import { getService } from '@/lib/api';
-import RichText from '@/components/RichText';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
