@@ -16,7 +16,7 @@
       "type": "string",
       "required": true
     },
-    "anchor": {
+    "slug": {
       "type": "string",
       "required": true
     },
