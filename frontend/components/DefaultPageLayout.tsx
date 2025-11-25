@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { ReactNode, createContext, useContext, useState } from 'react';
+import { ReactNode, createContext, useContext, useState, useCallback } from 'react';
 import HeaderSection from './HeaderSection';
 import FooterSection from './FooterSection';
 import BackNavigation from './BackNavigation';
@@ -51,9 +51,9 @@ export default function DefaultPageLayout({
   // Get current title, resetting if pathname changed
   const customTitle = titleState.pathname === pathname ? titleState.title : null;
 
-  const setCustomTitle = (title: ReactNode) => {
+  const setCustomTitle = useCallback((title: ReactNode) => {
     setTitleState({ pathname, title });
-  };
+  }, [pathname]);
 
   // For minimal pages (homepage), just render children with ScrollToTop
   if (isMinimalPage) {

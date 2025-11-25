@@ -40,7 +40,7 @@ export default function AboutSection({ about }: AboutSectionProps) {
         )}
 
         {about?.content && (
-          <div className="prose prose-lg max-w-none">
+          <div className="prose prose-lg max-w-none text-center">
             <RichText content={about.content} />
           </div>
         )}
