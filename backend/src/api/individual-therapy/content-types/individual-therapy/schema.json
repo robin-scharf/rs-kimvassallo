@@ -5,7 +5,7 @@
     "singularName": "individual-therapy",
     "pluralName": "individual-therapies",
     "displayName": "Individual Therapy",
-    "description": "Individual therapy page content with themes, approach, FAQ, and groups"
+    "description": "Individual therapy page content with intro section and additional content sections"
   },
   "options": {
     "draftAndPublish": false
@@ -17,18 +17,26 @@
       "required": true,
       "default": "Individual Psychotherapy"
     },
+    "subtitle": {
+      "type": "string",
+      "required": false
+    },
+    "profilePhoto": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
     "content": {
       "type": "richtext",
       "required": false
     },
-    "approachTitle": {
-      "type": "string",
-      "required": false,
-      "default": "Approach"
-    },
-    "approachContent": {
-      "type": "richtext",
-      "required": false
+    "sections": {
+      "type": "component",
+      "repeatable": true,
+      "component": "about.section"
     },
     "faqTitle": {
       "type": "string",
@@ -39,15 +47,6 @@
       "type": "component",
       "repeatable": true,
       "component": "faq.item"
-    },
-    "groupsTitle": {
-      "type": "string",
-      "required": false,
-      "default": "Groups + Workshops"
-    },
-    "groupsContent": {
-      "type": "richtext",
-      "required": false
     }
   }
 }

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter, Raleway, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import { getGlobal } from "@/lib/api";
+import { getGlobal, getHeader, getFooter, getMenuItems } from "@/lib/api";
 import { ThemeProvider } from "../components/ThemeProvider";
+import DefaultPageLayout from "../components/DefaultPageLayout";
 
 // Primary font: Inter for clean, modern look similar to Helvetica
 const inter = Inter({
@@ -56,11 +57,18 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Fetch global layout data
+  const [header, footer, menuItems] = await Promise.allSettled([
+    getHeader(),
+    getFooter(),
+    getMenuItems(),
+  ]).then(results => results.map(result => result.status === 'fulfilled' ? result.value : null));
+
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${inter.variable} ${raleway.variable} ${playfair.variable} font-sans antialiased`}>
@@ -70,7 +78,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <DefaultPageLayout
+            header={header}
+            footer={footer}
+            menuItems={menuItems || []}
+          >
+            {children}
+          </DefaultPageLayout>
         </ThemeProvider>
       </body>
     </html>

@@ -1,41 +1,29 @@
-import { getContact, getHeader, getFooter, getMenuItems } from '@/lib/api';
+import { getContact } from '@/lib/api';
 import { Section, Heading } from '@/components/hoc';
-import HeaderSection from '@/components/HeaderSection';
-import FooterSection from '@/components/FooterSection';
-import BackNavigation from '@/components/BackNavigation';
 import ContactForm from '@/components/ContactForm';
-import ScrollToTop from '@/components/ScrollToTop';
+import PageTitle from '@/components/PageTitle';
 import { Mail, Phone, MapPin } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 1;
 
 export default async function ContactPage() {
-  const [contact, header, footer, menuItems] = await Promise.allSettled([
-    getContact(),
-    getHeader(),
-    getFooter(),
-    getMenuItems(),
-  ]).then(results => results.map(result => result.status === 'fulfilled' ? result.value : null));
+  const contact = await getContact();
 
   return (
-    <main className="min-h-screen relative">
-      <HeaderSection header={header} menuItems={menuItems || []} />
-
-      <BackNavigation
-        title={
-          <div>
-            <Heading level={1} className="text-foreground">
-              {contact?.title || 'Contact'}
-            </Heading>
-            {contact?.description && (
-              <p className="text-lg text-muted-foreground mt-2">
-                {contact.description}
-              </p>
-            )}
-          </div>
-        }
-      />
+    <>
+      <PageTitle>
+        <div>
+          <Heading level={1} className="text-foreground">
+            {contact?.title || 'Contact'}
+          </Heading>
+          {contact?.description && (
+            <p className="text-lg text-muted-foreground mt-2">
+              {contact.description}
+            </p>
+          )}
+        </div>
+      </PageTitle>
 
       {/* Contact Details and Form */}
       <Section className="bg-muted/30">
@@ -97,9 +85,6 @@ export default async function ContactPage() {
           </div>
         </div>
       </Section>
-
-      <FooterSection footer={footer} />
-      <ScrollToTop />
-    </main>
+    </>
   );
 }

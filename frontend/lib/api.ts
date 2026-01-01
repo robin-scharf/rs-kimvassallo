@@ -70,7 +70,9 @@ export async function getAbout() {
 }
 
 export async function getIndividualTherapy() {
-  const data = await fetchAPI('/individual-therapy?populate=*')
+  const data = await fetchAPI(
+    '/individual-therapy?populate=profilePhoto&populate=sections.graphic&populate=faqItems'
+  )
   return data?.data || null
 }
 
