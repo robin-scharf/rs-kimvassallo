@@ -1,0 +1,26 @@
+{
+  "site": {
+    "siteName": "Kim Vassallo",
+    "tagline": "Therapy for expats & internationals",
+    "description": "Accredited psychologist offering one-to-one therapy, groups and workshops in Maastricht and online.",
+    "email": "hello@kimvassallo.com",
+    "bookingUrl": "https://calendar.google.com/",
+    "address": "Maastricht, the Netherlands",
+    "kvk": "78250927",
+    "nip": "253602",
+    "instagram": "",
+    "linkedin": "",
+    "navLinks": [
+      { "label": "About", "href": "/about" },
+      { "label": "Services", "href": "/services" },
+      { "label": "FAQ", "href": "/faq" },
+      { "label": "Blog", "href": "/blog" },
+      { "label": "Contact", "href": "/contact" }
+    ],
+    "footerLinks": [
+      { "label": "Practice Policy", "href": "/practice-policy" },
+      { "label": "Privacy Policy", "href": "/privacy" },
+      { "label": "Cookie Policy", "href": "/cookies" }
+    ]
+  }
+}

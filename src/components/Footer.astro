@@ -1,0 +1,39 @@
+---
+import { getEntry } from "astro:content";
+const settings = (await getEntry("settings", "site"))!.data;
+const year = new Date().getFullYear();
+---
+<footer class="mt-24 border-t border-[var(--color-line)] bg-[var(--color-bg-alt)]/40">
+  <div class="container-x py-12 grid gap-10 md:grid-cols-3">
+    <div>
+      <p class="font-serif text-lg">{settings.siteName}</p>
+      <p class="text-sm text-[var(--color-muted)] mt-2">{settings.tagline}</p>
+      <p class="text-sm mt-4">
+        <a href={`mailto:${settings.email}`} class="underline underline-offset-4">{settings.email}</a>
+      </p>
+      {settings.address && <p class="text-sm text-[var(--color-muted)] mt-1">{settings.address}</p>}
+    </div>
+
+    <nav aria-label="Footer" class="text-sm">
+      <p class="text-[var(--color-muted)] uppercase tracking-wide text-xs mb-3">Site</p>
+      <ul class="space-y-2">
+        {settings.navLinks.map((l) => <li><a href={l.href} class="hover:text-[var(--color-accent-dark)]">{l.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <nav aria-label="Legal" class="text-sm">
+      <p class="text-[var(--color-muted)] uppercase tracking-wide text-xs mb-3">Policies</p>
+      <ul class="space-y-2">
+        {settings.footerLinks.map((l) => <li><a href={l.href} class="hover:text-[var(--color-accent-dark)]">{l.label}</a></li>)}
+      </ul>
+      <p class="text-xs text-[var(--color-muted)] mt-6">
+        {settings.kvk && <>KVK {settings.kvk}<br /></>}
+        {settings.nip && <>NIP {settings.nip}</>}
+      </p>
+    </nav>
+  </div>
+  <div class="container-x pb-8 text-xs text-[var(--color-muted)] flex flex-wrap gap-4 justify-between">
+    <span>© {year} {settings.siteName}. All rights reserved.</span>
+    <span>Built with care · Hosted on Cloudflare</span>
+  </div>
+</footer>

@@ -1,0 +1,141 @@
+media:
+  input: public/uploads
+  output: /uploads
+
+content:
+  - name: settings
+    label: Site settings
+    type: file
+    path: src/content/settings.json
+    format: json
+    fields:
+      - { name: siteName, label: Site name, type: string }
+      - { name: tagline, label: Tagline, type: string }
+      - { name: description, label: SEO description, type: text }
+      - { name: email, label: Contact email, type: string, pattern: { regex: "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", message: "Enter a valid email" } }
+      - { name: bookingUrl, label: Booking URL, type: string }
+      - { name: address, label: Practice address, type: string }
+      - { name: kvk, label: KVK number, type: string }
+      - { name: nip, label: NIP number, type: string }
+      - { name: instagram, label: Instagram URL, type: string }
+      - { name: linkedin, label: LinkedIn URL, type: string }
+      - name: navLinks
+        label: Top navigation
+        type: object
+        list: true
+        fields:
+          - { name: label, label: Label, type: string }
+          - { name: href, label: URL, type: string }
+      - name: footerLinks
+        label: Footer policies
+        type: object
+        list: true
+        fields:
+          - { name: label, label: Label, type: string }
+          - { name: href, label: URL, type: string }
+
+  - name: home
+    label: Home page
+    type: file
+    path: src/content/site/home.md
+    fields:
+      - { name: title, label: Title, type: string }
+      - { name: tagline, label: Eyebrow tagline, type: string }
+      - { name: heroImage, label: Hero image, type: image }
+      - { name: heroImageAlt, label: Hero image alt text, type: string }
+      - { name: ctaText, label: CTA text, type: string }
+      - { name: ctaUrl, label: CTA URL, type: string }
+      - { name: seoTitle, label: SEO title, type: string }
+      - { name: seoDescription, label: SEO description, type: text }
+      - { name: body, label: Intro paragraphs, type: rich-text }
+
+  - name: about
+    label: About page
+    type: file
+    path: src/content/site/about.md
+    fields:
+      - { name: title, label: Title, type: string }
+      - { name: tagline, label: Eyebrow tagline, type: string }
+      - { name: heroImage, label: Portrait image, type: image }
+      - { name: heroImageAlt, label: Portrait alt text, type: string }
+      - { name: seoTitle, label: SEO title, type: string }
+      - { name: seoDescription, label: SEO description, type: text }
+      - { name: body, label: Page content, type: rich-text }
+
+  - name: contact
+    label: Contact page
+    type: file
+    path: src/content/site/contact.md
+    fields:
+      - { name: title, label: Title, type: string }
+      - { name: tagline, label: Eyebrow tagline, type: string }
+      - { name: ctaText, label: CTA text, type: string }
+      - { name: ctaUrl, label: CTA URL, type: string }
+      - { name: seoTitle, label: SEO title, type: string }
+      - { name: seoDescription, label: SEO description, type: text }
+      - { name: body, label: Page content, type: rich-text }
+
+  - name: services
+    label: Services
+    type: collection
+    path: src/content/services
+    view:
+      fields: [title, order, draft]
+      sort: [order, title]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: summary, label: One-line summary, type: text, required: true }
+      - { name: order, label: Display order, type: number, default: 0 }
+      - { name: icon, label: Icon name (lucide), type: string }
+      - { name: heroImage, label: Hero image, type: image }
+      - { name: heroImageAlt, label: Hero image alt, type: string }
+      - { name: ctaText, label: CTA text, type: string, default: "Book an introductory call" }
+      - { name: ctaUrl, label: CTA URL, type: string }
+      - { name: draft, label: Draft, type: boolean, default: false }
+      - { name: body, label: Body, type: rich-text }
+
+  - name: blog
+    label: Blog posts
+    type: collection
+    path: src/content/blog
+    view:
+      fields: [title, publishedAt, draft]
+      sort: ["-publishedAt", title]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: summary, label: Summary, type: text, required: true }
+      - { name: publishedAt, label: Published, type: date, required: true }
+      - { name: updatedAt, label: Updated, type: date }
+      - { name: coverImage, label: Cover image, type: image }
+      - { name: coverImageAlt, label: Cover image alt, type: string }
+      - { name: tags, label: Tags, type: string, list: true }
+      - { name: draft, label: Draft, type: boolean, default: false }
+      - { name: body, label: Body, type: rich-text }
+
+  - name: faq
+    label: FAQ items
+    type: collection
+    path: src/content/faq
+    view:
+      fields: [question, order, category]
+      sort: [order, question]
+    fields:
+      - { name: question, label: Question, type: string, required: true }
+      - { name: order, label: Order, type: number, default: 0 }
+      - { name: category, label: Category, type: select, options: { values: [getting-started, practical, ethics, general] }, default: general }
+      - { name: body, label: Answer, type: rich-text, required: true }
+
+  - name: policies
+    label: Policy pages
+    type: collection
+    path: src/content/policies
+    view:
+      fields: [title, updatedAt]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: updatedAt, label: Last updated, type: date }
+      - { name: body, label: Body, type: rich-text, required: true }
+
+settings:
+  content:
+    merge: true

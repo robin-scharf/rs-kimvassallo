@@ -1,0 +1,5 @@
+cloudflare_account_id = "FILL_ME"
+cloudflare_zone_id    = "FILL_ME"
+primary_domain        = "kim.robinscharf.com"
+project_name          = "kimvassallo"
+production_branch     = "main"

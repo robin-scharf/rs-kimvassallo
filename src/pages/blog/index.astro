@@ -1,0 +1,30 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+
+const fmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" });
+---
+<Base title="Blog" description="Notes, essays and reading on therapy, expat life and belonging.">
+  <section class="container-x pt-12 md:pt-20 pb-10">
+    <p class="text-sm uppercase tracking-[0.15em] text-[var(--color-accent-dark)] mb-4">Blog</p>
+    <h1>Notes between sessions</h1>
+  </section>
+  <section class="container-x pb-20 max-w-3xl">
+    <ul class="divide-y divide-[var(--color-line)]">
+      {posts.map((p) => (
+        <li class="py-6">
+          <a href={`/blog/${p.id}`} class="group block">
+            <time datetime={p.data.publishedAt.toISOString()} class="text-xs uppercase tracking-wider text-[var(--color-muted)]">
+              {fmt.format(p.data.publishedAt)}
+            </time>
+            <h2 class="text-2xl mt-1 group-hover:text-[var(--color-accent-dark)] transition-colors">{p.data.title}</h2>
+            <p class="mt-2 text-[var(--color-ink-soft)]">{p.data.summary}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>

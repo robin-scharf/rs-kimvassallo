@@ -1,0 +1,26 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+
+const services = (await getCollection("services", ({ data }) => !data.draft))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Services" description="Therapy and group work in Maastricht and online.">
+  <section class="container-x pt-12 md:pt-20 pb-10">
+    <p class="text-sm uppercase tracking-[0.15em] text-[var(--color-accent-dark)] mb-4">Services</p>
+    <h1 class="max-w-2xl">Ways we can work together</h1>
+  </section>
+  <section class="container-x pb-20">
+    <ul class="grid gap-6 md:grid-cols-2">
+      {services.map((s) => (
+        <li>
+          <a href={`/services/${s.id}`} class="group block h-full p-6 md:p-8 rounded-[var(--radius-md)] bg-[var(--color-bg-alt)]/50 hover:bg-[var(--color-bg-alt)] transition-colors">
+            <h2 class="text-xl group-hover:text-[var(--color-accent-dark)] transition-colors">{s.data.title}</h2>
+            <p class="mt-2">{s.data.summary}</p>
+            <span class="mt-4 inline-block text-sm underline underline-offset-4">Read more →</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>

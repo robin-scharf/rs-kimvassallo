@@ -1,0 +1,84 @@
+---
+import Base from "../layouts/Base.astro";
+import { getCollection, getEntry, render } from "astro:content";
+
+const home = (await getEntry("site", "home"))!;
+const settings = (await getEntry("settings", "site"))!.data;
+const { Content } = await render(home);
+
+const services = (await getCollection("services", ({ data }) => !data.draft))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const faqs = (await getCollection("faq")).sort((a, b) => a.data.order - b.data.order).slice(0, 4);
+---
+<Base title={home.data.seoTitle} description={home.data.seoDescription}>
+
+  <section class="container-x pt-12 md:pt-20 pb-16 md:pb-24 grid md:grid-cols-[1.2fr_1fr] gap-12 items-center">
+    <div>
+      <p class="text-sm uppercase tracking-[0.15em] text-[var(--color-accent-dark)] mb-4">{settings.tagline}</p>
+      <h1 class="text-balance">A space for what feels heavy, confusing or stuck.</h1>
+      <div class="prose-soft mt-6 max-w-prose">
+        <Content />
+      </div>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href={home.data.ctaUrl ?? settings.bookingUrl} class="btn btn-primary">
+          {home.data.ctaText ?? "Book an introductory call"}
+        </a>
+        <a href="/about" class="btn btn-outline">More about how I work</a>
+      </div>
+    </div>
+    <div class="relative aspect-[4/5] rounded-[var(--radius-lg)] bg-[var(--color-bg-alt)] overflow-hidden">
+      <div class="absolute inset-0 flex items-center justify-center text-[var(--color-muted)] text-sm">
+        Add your photo via CMS
+      </div>
+    </div>
+  </section>
+
+  <section class="container-x py-16 md:py-24 border-t border-[var(--color-line)]">
+    <div class="flex items-end justify-between gap-4 mb-10">
+      <h2>How I can help</h2>
+      <a href="/services" class="text-sm underline underline-offset-4 hover:text-[var(--color-accent-dark)]">All services</a>
+    </div>
+    <ul class="grid gap-6 md:grid-cols-2">
+      {services.map((s) => (
+        <li>
+          <a href={`/services/${s.id}`} class="group block h-full p-6 rounded-[var(--radius-md)] bg-[var(--color-bg-alt)]/50 hover:bg-[var(--color-bg-alt)] transition-colors">
+            <h3 class="group-hover:text-[var(--color-accent-dark)] transition-colors">{s.data.title}</h3>
+            <p class="mt-2 text-[var(--color-ink-soft)]">{s.data.summary}</p>
+            <span class="mt-4 inline-block text-sm underline underline-offset-4">Read more →</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="container-x py-16 md:py-24 border-t border-[var(--color-line)] grid md:grid-cols-2 gap-12">
+    <div>
+      <h2>Common questions</h2>
+      <p class="mt-4 max-w-prose">Things people often want to know before reaching out.</p>
+      <a href="/faq" class="mt-6 inline-block text-sm underline underline-offset-4 hover:text-[var(--color-accent-dark)]">All questions →</a>
+    </div>
+    <div>
+      {faqs.map((f) => (
+        <details class="group border-b border-[var(--color-line)] py-4">
+          <summary class="cursor-pointer flex justify-between items-center gap-4 font-medium">
+            {f.data.question}
+            <span class="text-[var(--color-accent-dark)] transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <div class="prose-soft mt-3 text-[var(--color-ink-soft)]">
+            <p set:html={f.body?.replace(/^---[\s\S]*?---/, "").trim()} />
+          </div>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-x py-16 md:py-24 border-t border-[var(--color-line)]">
+    <div class="rounded-[var(--radius-lg)] bg-[var(--color-accent)]/30 p-10 md:p-16 text-center">
+      <h2 class="text-balance">Curious whether this fits?</h2>
+      <p class="mt-4 max-w-2xl mx-auto">Start with a free 20-minute introductory call. We talk, and then you decide.</p>
+      <a href={settings.bookingUrl} class="btn btn-primary mt-6">Book an introductory call</a>
+    </div>
+  </section>
+
+</Base>

@@ -1,0 +1,23 @@
+---
+import Base from "../layouts/Base.astro";
+import { getEntry, render } from "astro:content";
+
+const about = (await getEntry("site", "about"))!;
+const settings = (await getEntry("settings", "site"))!.data;
+const { Content } = await render(about);
+---
+<Base title={about.data.seoTitle ?? about.data.title} description={about.data.seoDescription}>
+  <section class="container-x pt-12 md:pt-20 pb-16 grid md:grid-cols-[1fr_1.4fr] gap-12 items-start">
+    <div class="aspect-square rounded-[var(--radius-lg)] bg-[var(--color-bg-alt)] flex items-center justify-center text-sm text-[var(--color-muted)]">
+      Add your photo via CMS
+    </div>
+    <div>
+      <p class="text-sm uppercase tracking-[0.15em] text-[var(--color-accent-dark)] mb-4">{about.data.tagline}</p>
+      <h1>{about.data.title}</h1>
+      <div class="prose-soft mt-6">
+        <Content />
+      </div>
+      <a href={settings.bookingUrl} class="btn btn-primary mt-8">Book an introductory call</a>
+    </div>
+  </section>
+</Base>

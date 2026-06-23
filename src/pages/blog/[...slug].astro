@@ -1,0 +1,28 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((p) => ({ params: { slug: p.id }, props: { entry: p } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const fmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" });
+---
+<Base title={entry.data.title} description={entry.data.summary}>
+  <article class="container-x pt-12 md:pt-20 pb-20 max-w-3xl">
+    <a href="/blog" class="text-sm text-[var(--color-muted)] hover:text-[var(--color-ink)] underline-offset-4 hover:underline">← All notes</a>
+    <header class="mt-4">
+      <time datetime={entry.data.publishedAt.toISOString()} class="text-xs uppercase tracking-wider text-[var(--color-muted)]">
+        {fmt.format(entry.data.publishedAt)}
+      </time>
+      <h1 class="mt-2">{entry.data.title}</h1>
+      <p class="mt-4 text-lg text-[var(--color-ink-soft)]">{entry.data.summary}</p>
+    </header>
+    <div class="prose-soft mt-10">
+      <Content />
+    </div>
+  </article>
+</Base>

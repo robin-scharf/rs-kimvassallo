@@ -1,8 +1,0 @@
-packages:
-  - .
-onlyBuiltDependencies:
-  - '@swc/core'
-  - better-sqlite3
-  - core-js-pure
-  - esbuild
-  - sharp

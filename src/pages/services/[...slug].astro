@@ -1,0 +1,25 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const services = await getCollection("services", ({ data }) => !data.draft);
+  return services.map((s) => ({ params: { slug: s.id }, props: { entry: s } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+<Base title={entry.data.title} description={entry.data.summary}>
+  <article class="container-x pt-12 md:pt-20 pb-20">
+    <a href="/services" class="text-sm text-[var(--color-muted)] hover:text-[var(--color-ink)] underline-offset-4 hover:underline">← All services</a>
+    <header class="mt-4 max-w-3xl">
+      <h1>{entry.data.title}</h1>
+      <p class="mt-4 text-lg text-[var(--color-ink-soft)]">{entry.data.summary}</p>
+    </header>
+    <div class="prose-soft mt-10 max-w-prose">
+      <Content />
+    </div>
+    <a href={entry.data.ctaUrl ?? "/contact"} class="btn btn-primary mt-10">{entry.data.ctaText}</a>
+  </article>
+</Base>

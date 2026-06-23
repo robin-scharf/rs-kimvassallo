@@ -1,0 +1,41 @@
+---
+import Base from "../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+
+const items = (await getCollection("faq")).sort((a, b) => a.data.order - b.data.order);
+
+const rendered = await Promise.all(items.map(async (e) => {
+  const { Content } = await render(e);
+  return { question: e.data.question, Content };
+}));
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": items.map((e) => ({
+    "@type": "Question",
+    "name": e.data.question,
+    "acceptedAnswer": { "@type": "Answer", "text": e.body?.replace(/^---[\s\S]*?---/, "").trim() ?? "" },
+  })),
+};
+---
+<Base title="FAQ" description="Common questions about therapy, fees, sessions and confidentiality.">
+  <section class="container-x pt-12 md:pt-20 pb-10">
+    <p class="text-sm uppercase tracking-[0.15em] text-[var(--color-accent-dark)] mb-4">FAQ</p>
+    <h1>Common questions</h1>
+  </section>
+  <section class="container-x pb-20 max-w-3xl">
+    {rendered.map(({ question, Content }) => (
+      <details class="group border-b border-[var(--color-line)] py-5">
+        <summary class="cursor-pointer flex justify-between items-center gap-4 font-medium text-lg">
+          {question}
+          <span class="text-[var(--color-accent-dark)] transition-transform group-open:rotate-45 text-2xl leading-none">+</span>
+        </summary>
+        <div class="prose-soft mt-3">
+          <Content />
+        </div>
+      </details>
+    ))}
+  </section>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</Base>

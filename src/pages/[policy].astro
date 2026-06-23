@@ -1,0 +1,24 @@
+---
+import Base from "../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const policies = await getCollection("policies");
+  return policies.map((p) => ({ params: { policy: p.id }, props: { entry: p } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const fmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" });
+---
+<Base title={entry.data.title}>
+  <article class="container-x pt-12 md:pt-20 pb-20 max-w-3xl">
+    <h1>{entry.data.title}</h1>
+    {entry.data.updatedAt && (
+      <p class="mt-2 text-sm text-[var(--color-muted)]">Last updated {fmt.format(entry.data.updatedAt)}</p>
+    )}
+    <div class="prose-soft mt-8">
+      <Content />
+    </div>
+  </article>
+</Base>

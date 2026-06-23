@@ -1,0 +1,44 @@
+---
+import Base from "../layouts/Base.astro";
+import { getEntry, render } from "astro:content";
+
+const page = (await getEntry("site", "contact"))!;
+const settings = (await getEntry("settings", "site"))!.data;
+const { Content } = await render(page);
+---
+<Base title={page.data.seoTitle ?? page.data.title} description={page.data.seoDescription}>
+  <section class="container-x pt-12 md:pt-20 pb-20 grid md:grid-cols-2 gap-12">
+    <div>
+      <p class="text-sm uppercase tracking-[0.15em] text-[var(--color-accent-dark)] mb-4">{page.data.tagline}</p>
+      <h1>{page.data.title}</h1>
+      <div class="prose-soft mt-6">
+        <Content />
+      </div>
+      <a href={page.data.ctaUrl ?? settings.bookingUrl} class="btn btn-primary mt-8">{page.data.ctaText ?? "Book an introductory call"}</a>
+    </div>
+    <aside class="rounded-[var(--radius-md)] bg-[var(--color-bg-alt)]/60 p-6 md:p-8 h-fit">
+      <h2 class="text-xl">Direct contact</h2>
+      <dl class="mt-4 space-y-3 text-sm">
+        <div>
+          <dt class="text-[var(--color-muted)]">Email</dt>
+          <dd><a href={`mailto:${settings.email}`} class="underline underline-offset-4">{settings.email}</a></dd>
+        </div>
+        {settings.address && (
+          <div>
+            <dt class="text-[var(--color-muted)]">Practice</dt>
+            <dd>{settings.address}</dd>
+          </div>
+        )}
+        {(settings.kvk || settings.nip) && (
+          <div>
+            <dt class="text-[var(--color-muted)]">Credentials</dt>
+            <dd>
+              {settings.kvk && <>KVK {settings.kvk}<br /></>}
+              {settings.nip && <>NIP {settings.nip}</>}
+            </dd>
+          </div>
+        )}
+      </dl>
+    </aside>
+  </section>
+</Base>
