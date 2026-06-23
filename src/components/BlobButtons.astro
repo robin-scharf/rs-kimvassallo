@@ -1,0 +1,53 @@
+---
+// Progressive enhancement: turn every primary CTA into an organic SVG blob
+// shaped to fit its own label. No-JS / pre-hydration → buttons stay normal
+// rounded pills. Mount once (Base.astro).
+---
+<script>
+  import { blobPath, hashSeed } from "../scripts/blob.js";
+  const NS = "http://www.w3.org/2000/svg";
+
+  function draw(btn: HTMLElement, i: number) {
+    // Wrap the label once so it layers above the blob and we measure only the text.
+    let label = btn.querySelector<HTMLElement>(":scope > .blob-label");
+    if (!label) {
+      label = document.createElement("span");
+      label.className = "blob-label";
+      while (btn.firstChild) label.appendChild(btn.firstChild);
+      btn.appendChild(label);
+    }
+    const { width: w, height: h } = label.getBoundingClientRect();
+    if (!w) return; // hidden (e.g. closed mobile menu) — skip until visible
+
+    const seed = hashSeed((btn.textContent || "") + "#" + i);
+    const { d, ghostD, viewBox, width, height } = blobPath(w, h, { seed });
+
+    let svg = btn.querySelector<SVGSVGElement>(":scope > .blob-svg");
+    if (!svg) {
+      svg = document.createElementNS(NS, "svg");
+      svg.setAttribute("class", "blob-svg");
+      svg.setAttribute("aria-hidden", "true");
+      const fill = document.createElementNS(NS, "path");
+      fill.setAttribute("class", "blob-fill");
+      const ghost = document.createElementNS(NS, "path");
+      ghost.setAttribute("class", "blob-ghost");
+      svg.append(fill, ghost);
+      btn.insertBefore(svg, btn.firstChild);
+    }
+    svg.setAttribute("viewBox", viewBox);
+    svg.setAttribute("width", String(width));
+    svg.setAttribute("height", String(height));
+    svg.querySelector(".blob-fill")!.setAttribute("d", d);
+    svg.querySelector(".blob-ghost")!.setAttribute("d", ghostD);
+    btn.classList.add("is-blob");
+  }
+
+  const run = () =>
+    document.querySelectorAll<HTMLElement>(".btn-primary").forEach(draw);
+
+  // Webfont changes label width → wait for it, then re-fit on resize / menu open.
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(run);
+  let t: number;
+  addEventListener("resize", () => { clearTimeout(t); t = window.setTimeout(run, 150); });
+  addEventListener("toggle", (e) => (e.target as HTMLElement).open && run(), true);
+</script>

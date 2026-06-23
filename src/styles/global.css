@@ -88,6 +88,33 @@
   }
   .btn-primary:hover { background: var(--color-accent-dark); transform: translateY(-1px); }
 
+  /* Organic-blob primary CTA (set by BlobButtons.astro once the shape is drawn). */
+  .btn-primary.is-blob {
+    background: transparent;
+    position: relative;
+    overflow: visible;
+    border-radius: 0;
+  }
+  .btn-primary.is-blob:hover { background: transparent; }
+  .blob-svg {
+    position: absolute;
+    left: 50%; top: 50%;
+    translate: -50% -50%;
+    z-index: 0;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .blob-fill { fill: var(--color-ink); transition: fill 140ms ease; }
+  .btn-primary.is-blob:hover .blob-fill { fill: var(--color-accent-dark); }
+  .blob-ghost {
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 1.5;
+    opacity: 0.5;
+    vector-effect: non-scaling-stroke;
+  }
+  .blob-label { position: relative; z-index: 1; }
+
   .btn-outline {
     background: transparent;
     color: var(--color-ink);

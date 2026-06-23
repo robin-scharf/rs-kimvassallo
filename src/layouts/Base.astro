@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import BlobButtons from "../components/BlobButtons.astro";
 import { getEntry } from "astro:content";
 
 type Props = {
@@ -69,5 +70,6 @@ const ogImage = image ?? "/og.png";
       <slot />
     </main>
     <Footer />
+    <BlobButtons />
   </body>
 </html>
