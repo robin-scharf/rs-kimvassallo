@@ -1,0 +1,5 @@
+# pnpm 11 build-script allowlist (replaces package.json "pnpm.onlyBuiltDependencies").
+allowBuilds:
+  esbuild: true
+  sharp: true
+  workerd: true
